@@ -10,8 +10,8 @@ DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
 	user_id 	SERIAL PRIMARY KEY,
 	user_name	varchar UNIQUE NOT NULL,
-	password	char(32), 
-	auth_hash	char(32),  
+	password	varchar, 
+	auth_hash	varchar,  
 	email		varchar,
 	first_name	varchar,
 	last_name	varchar,
@@ -78,5 +78,8 @@ CREATE TABLE group_members (
 );
 COMMENT ON TABLE group_members IS 'join table for users and groups';
 
+INSERT INTO USERS(user_name,password) VALUES ('test', 'test');
+
 COMMIT;
+
 
