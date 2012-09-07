@@ -3,6 +3,7 @@
  * -Lee Hall Wed 05 Sep 2012 10:55:06 PM EDT
  */
 
+SET ROLE honeycomb;
 BEGIN;
 
 DROP TABLE IF EXISTS users CASCADE;	
