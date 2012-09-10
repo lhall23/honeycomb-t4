@@ -78,7 +78,7 @@ CREATE TABLE group_members (
 );
 COMMENT ON TABLE group_members IS 'join table for users and groups';
 
-INSERT INTO USERS(user_name,password) VALUES ('test', 'test');
+INSERT INTO USERS(user_name,password,email) VALUES ('test', 'test', 'test@test.com');
 
 COMMIT;
 
