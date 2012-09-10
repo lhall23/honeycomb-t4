@@ -11,8 +11,8 @@ CREATE TABLE users (
 	user_id 	SERIAL PRIMARY KEY,
 	user_name	varchar UNIQUE NOT NULL,
 	password	varchar, 
-	auth_hash	varchar,  
-	email		varchar,
+	auth_hash	varchar UNIQUE,  
+	email		varchar UNIQUE NOT NULL,
 	first_name	varchar,
 	last_name	varchar,
 	quota		integer DEFAULT 0

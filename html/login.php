@@ -13,8 +13,10 @@ if (array_key_exists('login', $_POST)){
 		die("User or password not set. How did you get here?");
 	}
 
-	//Get user info from database
-	$sql="SELECT user_id,password FROM users WHERE user_name=$1;";
+	// Get user info from database. Only retrieve users who have authenticated
+	// their accounts.
+	$sql="SELECT user_id,password FROM users 
+		WHERE user_name=$1 AND auth_hash IS NULL;";
 	$params=array($_POST['user_name']);
 	$results=pg_query_params($conn, $sql, $params);
 	assert('pg_num_rows($results) <= 1 /*uniqueness violation in database*/');
