@@ -46,7 +46,7 @@ if (array_key_exists('verify', $_GET)){
 	}
 	$row=pg_fetch_array($results);
 	$SESSION['user_id']=$row['user_id'];
-	$sql="UPDATE users SET auth_hash TO NULL WHERE user_id=$1;";
+	$sql="UPDATE users SET auth_hash=NULL WHERE user_id=$1;";
 	$params=array($row['user_id']);
 	$results=pg_query_params($conn, $sql, $params);
 	if (pg_affected_rows($results) != 1){
@@ -62,26 +62,27 @@ if (array_key_exists('verify', $_GET)){
 <TITLE>Register</TITLE>
 </HEAD>
 <BODY>
-<form>
-	<table>
-		<tr>
-			<td>Username: </td>
-			<td><input type="text" name="user_name"></td>
-		</tr>
-		<tr>
-			<td>Password: </td>
-			<td><input type="text" name="password"></td>
-		</tr>
-		<tr>
-			<td>Email: </td>
-			<td><input type="text" name="email"></td>
-		</tr>
-		<tr>
-			<td><input type="hidden" name="register"></td>
-			<td><input type="submit" value="Register"></td>
-		</tr>
-	</table>
-</form>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" 
+			method="post" id="register">
+		<table>
+			<tr>
+				<td>Username: </td>
+				<td><input type="text" name="user_name"></td>
+			</tr>
+			<tr>
+				<td>Password: </td>
+				<td><input type="text" name="password"></td>
+			</tr>
+			<tr>
+				<td>Email: </td>
+				<td><input type="text" name="email"></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="register"></td>
+				<td><input type="submit" value="Register"></td>
+			</tr>
+		</table>
+	</form>
 </BODY>
 </HTML>
 
