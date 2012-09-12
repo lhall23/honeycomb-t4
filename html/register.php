@@ -62,8 +62,36 @@ if (array_key_exists('verify', $_GET)){
 <TITLE>Register</TITLE>
 </HEAD>
 <BODY>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" 
+<link href="YUI/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link href="YUI/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<script src="YUI/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<script type="text/xml">
+<!--
+<oa:widgets>
+  <oa:widget wid="2444522" binding="#OAWidget" />
+</oa:widgets>
+-->
+</script>
+<table cellspacing="1" cellpadding="0" border="0"
+ bgcolor="black" id="shell" height="639" width="1168">
+   <tr height="50">
+      <td height="83" colspan="2" bgcolor="white">
+         <table title="Banner" id="banner" border="0">
+            <tr><td width="1195"><a href="http://www.flickr.com/photos/87155180@N06/7980116517/" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="http://farm9.staticflickr.com/8170/7980116517_004c52431c_b.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
+         </table>
+      </td>
+   </tr>
+   <tr height="200">
+   
+        
+      </td><td width="397" bgcolor="white">
+     
+         <table title="Content" id="content" border="0">
+            <tr><td><form action="<?php echo $_SERVER['PHP_SELF']; ?>" 
 			method="post" id="register">
+            
+            
 		<table>
 			<tr>
 				<td>Username: </td>
@@ -82,7 +110,20 @@ if (array_key_exists('verify', $_GET)){
 				<td><input type="submit" value="Register"></td>
 			</tr>
 		</table>
-	</form>
+	</form></td></tr>
+         </table>
+      </td>
+   </tr>
+</table>
+ 
+<style>
+		.ygtvitem {
+			font-family:Verdana, Geneva, sans-serif;
+		}
+	</style>
+
+
+	
 </BODY>
 </HTML>
 
