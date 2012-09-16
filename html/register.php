@@ -9,7 +9,7 @@ require_once('include/conf.php');
 
 $MAIL_SUBJECT="[Honeycomb] Registration";
 $MAIL_TEXT="Please click the following link to finish the registration" .
-	" process. http://$URL_BASE$_SERVER[PHP_SELF]?verify=";
+	" process. $URL_BASE$_SERVER[PHP_SELF]?verify=";
 
 //Is there a user trying to register?
 if (array_key_exists('register', $_POST)){
@@ -66,10 +66,10 @@ if (array_key_exists('verify', $_GET)){
 <TITLE>Register</TITLE>
 </HEAD>
 <BODY>
-<link href="YUI/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="YUI/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="YUI/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="YUI/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>

@@ -7,7 +7,7 @@
 $conn_str="user=apache dbname=honeycomb";
 $conn= pg_connect($conn_str);
 
-$URL_BASE="$_SERVER[SERVER_NAME]";
+$URL_BASE="http://$_SERVER[SERVER_NAME]";
 $FILE_STORE="/var/www/honeycomb/file_store";
 $FILE_URL=$URL_BASE . "/file_store";
 

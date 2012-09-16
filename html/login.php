@@ -3,10 +3,10 @@
  * login.php
  * -Lee Hall Thu 06 Sep 2012 10:23:45 PM EDT
  */
+require_once('include/conf.php');
 
 //Is there a user trying to log in?
 if (array_key_exists('login', $_POST)){
-	require_once('include/conf.php');
 
 	if (!array_key_exists('user_name', $_POST) || 
 			!array_key_exists('password', $_POST) ){
@@ -55,10 +55,10 @@ if (array_key_exists('logout', $_POST)){
 </HEAD>
 <BODY>
 
-<link href="YUI/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="YUI/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="YUI/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="YUI/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>
@@ -71,7 +71,7 @@ if (array_key_exists('logout', $_POST)){
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><a href="http://www.flickr.com/photos/87155180@N06/7980116517/" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="http://farm9.staticflickr.com/8170/7980116517_004c52431c_b.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
+            <tr><td width="1195"><a href="images/banner.jpg" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="images/banner.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
          </table>
       </td>
    </tr>
@@ -79,10 +79,10 @@ if (array_key_exists('logout', $_POST)){
       <td width="260" bgcolor="white">
          <table id="navigation" title="Navigation" border="0">
          
-           <link href="YUI/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="YUI/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="YUI/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="YUI/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+           <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>
@@ -95,7 +95,7 @@ if (array_key_exists('logout', $_POST)){
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><a href="http://www.flickr.com/photos/87155180@N06/7980116517/" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="http://farm9.staticflickr.com/8170/7980116517_004c52431c_b.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
+            <tr><td width="1195"><a href="images/banner.jpg" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="images/banner.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
          </table>
       </td>
    </tr>
@@ -136,7 +136,7 @@ if (array_key_exists('logout', $_POST)){
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><input name="password" type="text"></td>
+				<td><input name="password" type="password"></td>
 			</tr>
 			<tr>
 				<td><input name="login" type="hidden"</td>

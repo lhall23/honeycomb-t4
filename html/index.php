@@ -12,7 +12,7 @@ require_once('include/conf.php');
 </HEAD>
 <BODY>
 Welcome.<br>
-<a href="<?php echo "http://$URL_BASE/login.php?logout"; ?>">Logout</a>
+<a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a>
 </BODY>
 </HTML>
 
