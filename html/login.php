@@ -6,7 +6,7 @@
 
 //Is there a user trying to log in?
 if (array_key_exists('login', $_POST)){
-	require_once('include/db.php');
+	require_once('include/conf.php');
 
 	if (!array_key_exists('user_name', $_POST) || 
 			!array_key_exists('password', $_POST) ){
@@ -33,13 +33,20 @@ if (array_key_exists('login', $_POST)){
 		session_start();
 		$_SESSION['user_name']=$_POST['user_name'];
 		$_SESSION['user_id']=$row['user_id'];
-		//header("Location: index.php");
+		$_SESSION['user_dir_fs']=$FILE_STORE . $row['user_id'];
+		$_SESSION['user_dir_url']=$FILE_URL . $row['user_id'];
+		header("Location: profilePage.php");
 		die("Done loading user.");
 	} else {
-		//header("Location: $_SERVER[PHP_SELF]");
+		header("Location: $_SERVER[PHP_SELF]");
 		echo "\"$_POST[password]\" != \"$row[password]\".\n";
 		die("Bad password.");
 	}
+}
+if (array_key_exists('logout', $_POST)){
+	session_destroy();
+	header("Location: $_SERVER[PHP_SELF]");
+	die("Reloading login page.");
 }
 ?>
 <HTML> 
@@ -140,7 +147,8 @@ if (array_key_exists('login', $_POST)){
          </table>
       </td>
    </tr>
-</table>
+</table> <br>
+<a href="<?php echo "$URL_BASE/register.php" ; ?>">Register a new account</a><br>
  
 <style>
 		.ygtvitem {
