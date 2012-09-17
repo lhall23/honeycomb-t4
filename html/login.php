@@ -33,10 +33,10 @@ if (array_key_exists('login', $_POST)){
 		session_start();
 		$_SESSION['user_name']=$_POST['user_name'];
 		$_SESSION['user_id']=$row['user_id'];
-		//header("Location: index.php");
+		header("Location: index.php");
 		die("Done loading user.");
 	} else {
-		//header("Location: $_SERVER[PHP_SELF]");
+		header("Location: $_SERVER[PHP_SELF]");
 		echo "\"$_POST[password]\" != \"$row[password]\".\n";
 		die("Bad password.");
 	}

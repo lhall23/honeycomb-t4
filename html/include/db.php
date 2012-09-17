@@ -6,5 +6,6 @@
 
 $conn_str="user=apache dbname=honeycomb";
 $conn= pg_connect($conn_str);
+if (!$conn) die("Unable to connect to database.");
 
 ?>
