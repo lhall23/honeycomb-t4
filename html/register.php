@@ -3,13 +3,13 @@
  * register.php
  * -Lee Hall Sat 08 Sep 2012 06:05:55 PM EDT
  */
-$MAIL_SUBJECT="[Honeycomb] Registration";
-$MAIL_TEXT="Please click the following link to finish the registration" .
-	" process. $_SERVER[PHP_SELF]?verify=";
-
 // Yes, this makes a connection when we don't neccesarily need it. It's better
 // than repeating the include inside multiple branches, though
-require_once('include/db.php');
+require_once('include/conf.php');
+
+$MAIL_SUBJECT="[Honeycomb] Registration";
+$MAIL_TEXT="Please click the following link to finish the registration" .
+	" process. $URL_BASE$_SERVER[PHP_SELF]?verify=";
 
 //Is there a user trying to register?
 if (array_key_exists('register', $_POST)){
@@ -38,14 +38,18 @@ if (array_key_exists('register', $_POST)){
 
 //Is someone trying to get their account verified?
 if (array_key_exists('verify', $_GET)){
-	$sql="SELECT user_id FROM users WHERE auth_hash=$1;";
+	$sql="SELECT user_id,user_name FROM users WHERE auth_hash=$1;";
 	$params=array($_GET['verify']);
 	$results=pg_query_params($conn, $sql, $params);
 	if (pg_num_rows($results) != 1){
 		die("Could not find that account.");	
 	}
 	$row=pg_fetch_array($results);
-	$SESSION['user_id']=$row['user_id'];
+	$_SESSION['user_id']=$row['user_id'];
+	$_SESSION['user_name']=$row['user_name'];
+	if (!mkdir("$FILE_STORE/$_SESSION[user_name]")) {
+		die("Unable to create user file system.");
+	} 
 	$sql="UPDATE users SET auth_hash=NULL WHERE user_id=$1;";
 	$params=array($row['user_id']);
 	$results=pg_query_params($conn, $sql, $params);
@@ -62,10 +66,10 @@ if (array_key_exists('verify', $_GET)){
 <TITLE>Register</TITLE>
 </HEAD>
 <BODY>
-<link href="YUI/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="YUI/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="YUI/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="YUI/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>
@@ -99,7 +103,7 @@ if (array_key_exists('verify', $_GET)){
 			</tr>
 			<tr>
 				<td>Password: </td>
-				<td><input type="text" name="password"></td>
+				<td><input type="password" name="password"></td>
 			</tr>
 			<tr>
 				<td>Email: </td>
