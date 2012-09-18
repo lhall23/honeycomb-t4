@@ -1,3 +1,8 @@
+<HTML>
+<HEAD>
+    <TITLE>User Profile</TITLE>
+</HEAD>
+<BODY>
 <?php
     require_once('include/session.php');
     require_once('include/conf.php');
@@ -8,7 +13,7 @@
 <?php
 if (array_key_exists('uploadedfile', $_FILES)){
     /* Add the original filename to our target path.  
-    Result is "uploads/filename.extension" */
+        Result is "uploads/filename.extension" */
     $target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
 
     if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
@@ -100,3 +105,5 @@ if (array_key_exists('uploadedfile', $_FILES)){
     font-family:Verdana, Geneva, sans-serif;
   }
 </style>
+</BODY>
+</HTML>
