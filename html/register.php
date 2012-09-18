@@ -24,7 +24,7 @@ if (array_key_exists('register', $_POST)){
 	$token=md5(mt_rand() . $_POST['user_name']);
 	$sql="INSERT INTO users(user_name,password,email,auth_hash) VALUES 
 		($1, $2, $3, $4);";
-	$params=array($_POST['user_name'], $_POST['password'], 
+	$params=array($_POST['user_name'], md5($_POST['password']), 
 		$_POST['email'], $token);
 	$results=pg_query_params($conn, $sql, $params);
 	if (pg_affected_rows($results) != 1) {

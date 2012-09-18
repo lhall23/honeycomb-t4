@@ -6,6 +6,7 @@
 
 $conn_str="user=apache dbname=honeycomb";
 $conn= pg_connect($conn_str);
+if (!$conn) die("Unable to connect to database.");
 
 $URL_BASE="https://$_SERVER[SERVER_NAME]";
 $FILE_STORE="/var/www/honeycomb/file_store";
