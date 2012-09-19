@@ -31,6 +31,22 @@ if (array_key_exists('uploadedfile', $_FILES)){
 ?>
 
 
+
+<?php 
+$db = pg_connect('host=localhost dbname=contacts user=contacts password=firstphp'); 
+$id = (int)$_POST['id']; 
+$query = "DELETE FROM files where file_name='$file_name'"; 
+$result = pg_query($query); 
+if (!$result) { 
+    printf ("ERROR"); 
+    $errormessage = pg_errormessage($db); 
+    echo $errormessage; 
+    exit(); 
+} 
+printf ("Deleted from the database successfully"); 
+pg_close(); 
+?> 
+
 <link  href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
 <link  href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
 <script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
@@ -83,6 +99,22 @@ if (array_key_exists('uploadedfile', $_FILES)){
           <tr>
             <td><input type="submit" value="Upload File" /></td>
           </tr>
+        <?php 
+        $db = pg_connect('host=localhost dbname=files file=file_name password=firstphp'); 
+
+        $query = "SELECT * FROM files"; 
+
+        $result = pg_query($query); 
+        if (!$result) { 
+            echo "Problem with query " . $query . "<br/>"; 
+            echo pg_last_error(); 
+            exit(); 
+        } 
+
+        while($myrow = pg_fetch_assoc($result)) { 
+            printf ("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $myrow['file_name'];
+        } 
+        ?> 
           <tr>
             <td>
               <a href="<?php echo "$FILE_URL/$_SESSION[user_name]"; ?>">
