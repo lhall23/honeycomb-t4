@@ -160,7 +160,7 @@ if (array_key_exists('logout', $_POST)){
       </td>
    </tr>
 </table> <br>
-<a href="register.php" ; ?>">Register a new account</a><br>
+<a href="register.php">Register a new account</a><br>
  
 <style>
         .ygtvitem {
