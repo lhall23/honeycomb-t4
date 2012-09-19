@@ -73,13 +73,21 @@ if (array_key_exists('logout', $_POST)){
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><a href="images/banner.jpg" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="images/banner.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
+            <tr><td width="1195"><a title="TheHoneycombBanner1 by devgurl36!"><img src="images/banner2.jpg" width="1159" height="168" alt="TheHoneycombBanner1"></a></td></tr>
          </table>
       </td>
    </tr>
    <tr height="200">
       <td width="260" bgcolor="white">
          <table id="navigation" title="Navigation" border="0">
+         
+         <tr><td>
+ <table border="0" cellspacing="0" cellpadding="0"> 
+            <tr> 
+                
+                
+                
+            </tr> 
          
            <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
 <link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
@@ -92,13 +100,7 @@ if (array_key_exists('logout', $_POST)){
 </oa:widgets>
 -->
 </script>
-<table cellspacing="1" cellpadding="0" border="0"
-    bgcolor="black" id="shell" height="639" width="1168">
-  <tr height="50">
-      <td height="83" colspan="2" bgcolor="white">
-         <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><a href="images/banner.jpg" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="images/banner.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
-         </table>
+     
       </td>
    </tr>
     <tr height="200">
@@ -107,10 +109,11 @@ if (array_key_exists('logout', $_POST)){
      
        <table id="navigation" title="Navigation" border="0">
          
-            <tr><td>Links!</td></tr>
-            <tr><td>Links!</td></tr>
-            <tr><td>Links!</td></tr>
+
         </table>
+
+        
+
       </td><td width="397" bgcolor="white">
 
          <table title="Content" id="content" border="0">
