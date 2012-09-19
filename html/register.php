@@ -20,6 +20,13 @@ if (array_key_exists('register', $_POST)){
 		die("User, password or email not set. How did you get here?");
 	}
 
+    //Make sure that no one's doing anything tricksey with the username,
+    //since it gets used as a filename for the moment
+    if(!ctype_alnum($_POST['user_name'])){
+        die("Illegal characters in username. ".
+            "Please only use letters and numbers.");
+    }
+
 	//Get user info from database
 	$token=md5(mt_rand() . $_POST['user_name']);
 	$sql="INSERT INTO users(user_name,password,email,auth_hash) VALUES 
