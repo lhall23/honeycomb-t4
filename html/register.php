@@ -85,18 +85,21 @@ if (array_key_exists('verify', $_GET)){
 -->
 </script>
 <table cellspacing="1" cellpadding="0" border="0"
- bgcolor="black" id="shell" height="639" width="1168">
+ bgcolor="white" id="shell" height="639" width="1168">
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><a href="http://www.flickr.com/photos/87155180@N06/7980116517/" title="TheHoneycombBanner1 by devgurl36!, on Flickr"><img src="http://farm9.staticflickr.com/8170/7980116517_004c52431c_b.jpg" width="1157" height="137" alt="TheHoneycombBanner1"></a></td></tr>
+            <tr><td width="1195"><img src="images/Honeycomb Logo 2.jpg" width="1157" height="137" alt="Honeycomb Logo 2"></a></td></tr>
          </table>
       </td>
    </tr>
    <tr height="200">
-   
+       <td width="216" bgcolor="white">
+      <table id="navigation" title="Navigation" border="0">
+ <img src="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/images/Side Bar Pics.jpg" width="432" height="432">
+      </table>      <img src="images/Side Bar Pics.jpg" width="216" height="864">    
         
-      </td><td width="397" bgcolor="white">
+      </td><td width="949" bgcolor="white">
      
          <table title="Content" id="content" border="0">
             <tr><td><form action="<?php echo $_SERVER['PHP_SELF']; ?>" 
