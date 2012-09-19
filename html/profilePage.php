@@ -24,28 +24,22 @@ if (array_key_exists('uploadedfile', $_FILES)){
         echo "There was an error uploading the file, please try again!";
     }
 }
+
+if (array_key_exists('delete', $_POST)){
+    foreach ($_POST['filelist'] as $myfile){
+        if (strstr('/', $myfile)){
+            die("Please don't be rude. That's not a filename I gave you.");
+        }
+        if (! unlink("$FILE_STORE/$_SESSION[user_name]/$myfile")) {
+            die("Unable to delete $myfile.");
+        }
+    }
+}
 ?>
 
 <?php
     print "Welcome $_SESSION[user_name]";
 ?>
-
-
-
-<?php 
-$db = pg_connect('host=localhost dbname=contacts user=contacts password=firstphp'); 
-$id = (int)$_POST['id']; 
-$query = "DELETE FROM files where file_name='$file_name'"; 
-$result = pg_query($query); 
-if (!$result) { 
-    printf ("ERROR"); 
-    $errormessage = pg_errormessage($db); 
-    echo $errormessage; 
-    exit(); 
-} 
-printf ("Deleted from the database successfully"); 
-pg_close(); 
-?> 
 
 <link  href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
 <link  href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
@@ -65,11 +59,8 @@ pg_close();
       <table title="Banner" id="banner" border="0">
         <tr>
           <td width="1195">
-            <a href="images/banner.jpg" 
-              title="TheHoneycombBanner1 by devgurl36!, on Flickr">
-              <img src="http://farm9.staticflickr.com/8170/7980116517_004c52431c_b.jpg" 
-                width="1157" height="137" alt="TheHoneycombBanner1">
-            </a>
+            <img src="images/banner.jpg" 
+              width="1157" height="137" alt="TheHoneycombBanner1">
           </td>
         </tr>
       </table>
@@ -86,6 +77,20 @@ pg_close();
     <td width="989" bgcolor="white">
       <form enctype="multipart/form-data" 
                   action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+        <table title="FileList" id="FileList" border="0">
+        <?php 
+        $file_dir = opendir("$FILE_STORE/$_SESSION[user_name]");
+        if (!$file_dir) die("Can't see directory.");
+        $id = 0;
+        while($myfile = readdir($file_dir)){
+            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/>%s</td></tr>', $myfile, $myfile);
+        } 
+        ?> 
+          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
+        </table>
+      </form>
+      <form enctype="multipart/form-data" 
+                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
           <tr>
             <td>
@@ -99,22 +104,6 @@ pg_close();
           <tr>
             <td><input type="submit" value="Upload File" /></td>
           </tr>
-        <?php 
-        $db = pg_connect('host=localhost dbname=files file=file_name password=firstphp'); 
-
-        $query = "SELECT * FROM files"; 
-
-        $result = pg_query($query); 
-        if (!$result) { 
-            echo "Problem with query " . $query . "<br/>"; 
-            echo pg_last_error(); 
-            exit(); 
-        } 
-
-        while($myrow = pg_fetch_assoc($result)) { 
-            printf ("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $myrow['file_name'];
-        } 
-        ?> 
           <tr>
             <td>
               <a href="<?php echo "$FILE_URL/$_SESSION[user_name]"; ?>">
