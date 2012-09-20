@@ -90,9 +90,6 @@ if (array_key_exists('delete', $_POST)){
             <td><input type="submit" value="Upload File" /></td>
           </tr>
           <tr>
-            <td><a href="<?php echo "$FILE_URL/$_SESSION[user_name]"; ?>"> User directory</a></td>
-          </tr>
-          <tr>
             <td><a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a></td>
           </tr>
         </table>
