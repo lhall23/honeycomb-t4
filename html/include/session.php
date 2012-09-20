@@ -9,9 +9,9 @@
 
 session_start();
 if (! array_key_exists('user_id', $_SESSION) ||
-		!isset($_SESSION['user_id'])){
-	header( "location: login.php");
-	die("User not logged in");
+        !isset($_SESSION['user_id'])){
+    header( "location: login.php");
+    die("User not logged in");
 }
 
 ?>

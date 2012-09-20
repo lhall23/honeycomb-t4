@@ -1,3 +1,6 @@
+<?php
+    //Display a user profile, list the files, and do most of the heavy lifting
+?>
 <HTML>
 <HEAD>
     <TITLE>User Profile</TITLE>
@@ -41,10 +44,14 @@ if (array_key_exists('delete', $_POST)){
     print "Welcome $_SESSION[user_name]";
 ?>
 
-<link  href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link  href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
+    rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" 
+    rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" 
+    type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" 
+    type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>
@@ -55,7 +62,9 @@ if (array_key_exists('delete', $_POST)){
 <table cellspacing="1" cellpadding="0" border="0" 
     bgcolor="black" id="shell" height="639" width="1168">
   <tr height="50">
-    <td height="83" colspan="2" bgcolor="white"><img src="images/Honeycomb Logo 2.jpg" width="1157" height="137" alt="Honeycomb Logo 2"></td>
+    <td height="83" colspan="2" bgcolor="white">
+        <img src="images/Honeycomb Logo 2.jpg" 
+            width="1157" height="137" alt="Honeycomb Logo 2"></td>
   </tr>
   <tr height="200">
     <td width="216" bgcolor="white">

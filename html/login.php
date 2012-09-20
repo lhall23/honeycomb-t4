@@ -2,6 +2,8 @@
 /* 
  * login.php
  * -Lee Hall Thu 06 Sep 2012 10:23:45 PM EDT
+ *
+ * Allow the user to login
  */
 require_once('include/conf.php');
 
@@ -54,8 +56,10 @@ if (array_key_exists('logout', $_POST)){
 <HTML> 
 <HEAD>
   <TITLE>Honeycomb Login</TITLE>
-<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-  <link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
+    rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" 
+    rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
 <table cellspacing="1" cellpadding="0" border="0"
@@ -65,11 +69,12 @@ if (array_key_exists('logout', $_POST)){
          <table title="Banner" id="banner" border="0">
             <tr><td width="1195"></a></td></tr>
          </table>
-      <img src="images/Honeycomb Logo 2.jpg" width="1221" height="137" alt="Honeycomb Logo 2">      </td>
+      <img src="images/Honeycomb Logo 2.jpg" 
+          width="1221" height="137" alt="Honeycomb Logo 2">      </td>
   </tr>
    <tr height="200">
         
-      <td width="219"><a href="<?php echo "$URL_BASE/register.php" ; ?>">Register a new account</a></td>
+      <td width="219"><a href="register.php">"Register a new account</a></td>
        
      <td width="946" bgcolor="white">
    
@@ -86,10 +91,14 @@ if (array_key_exists('logout', $_POST)){
                 
             </tr> 
          
-           <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
+    rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" 
+    rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" 
+    type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" 
+    type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>

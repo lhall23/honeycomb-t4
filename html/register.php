@@ -2,6 +2,9 @@
 /* 
  * register.php
  * -Lee Hall Sat 08 Sep 2012 06:05:55 PM EDT
+ *
+ * Allow the user to create a new account, and verify that account
+ *
  */
 // Yes, this makes a connection when we don't neccesarily need it. It's better
 // than repeating the include inside multiple branches, though
@@ -89,10 +92,14 @@ if (array_key_exists('verify', $_GET)){
 <TITLE>Register</TITLE>
 </HEAD>
 <BODY>
-<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
+    rel="stylesheet" type="text/css">
+<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" 
+    rel="stylesheet" type="text/css">
+<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" 
+    type="text/javascript"></script>
+<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" 
+    type="text/javascript"></script>
 <script type="text/xml">
   <!--
   <oa:widgets>
