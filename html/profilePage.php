@@ -78,12 +78,13 @@ if (array_key_exists('delete', $_POST)){
         <table title="FileList" id="FileList" border="0">
         <?php 
         $mydir = "$FILE_STORE/$_SESSION[user_name]";
+        $myurl = "$FILE_URL/$_SESSION[user_name]";
         $file_dir = opendir($mydir);
         if (!$file_dir) die("Can't see directory.");
         $id = 0;
         while($myfile = readdir($file_dir)){
             if ($myfile == "." || $myfile == "..") continue;
-            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/><a href="%s/%s">%s</a></td></tr>', $myfile, $mydir, $myfile, $myfile);
+            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/><a href="%s/%s">%s</a></td></tr>', $myfile, $myurl, $myfile, $myfile);
         } 
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
