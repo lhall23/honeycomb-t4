@@ -4,8 +4,8 @@
 </HEAD>
 <BODY>
 <?php
-    require_once('include/session.php');
-    require_once('include/conf.php');
+    require_once('file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/include/session.php');
+    require_once('file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/include/conf.php');
     // Where the file is going to be placed 
     $target_path = "$FILE_STORE/$_SESSION[user_name]/";
 ?>
@@ -41,10 +41,10 @@ if (array_key_exists('delete', $_POST)){
     print "Welcome $_SESSION[user_name]";
 ?>
 
-<link  href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link  href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+<link  href="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link  href="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
+<script src="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
 <script type="text/xml">
 <!--
 <oa:widgets>
@@ -59,9 +59,7 @@ if (array_key_exists('delete', $_POST)){
       <table title="Banner" id="banner" border="0">
         <tr>
           <td width="1195">
-            <img src="images/banner2.jpg" 
-              width="1160" height="168" alt="TheHoneycombBanner1">
-          </td>
+          <img src="../../../../Documents/Unnamed Site 2/Honeycomb Logo 2.jpg" width="1008" height="168"></td>
         </tr>
       </table>
     </td>
@@ -69,29 +67,26 @@ if (array_key_exists('delete', $_POST)){
   <tr height="200">
     <td width="176" bgcolor="white">
       <table id="navigation" title="Navigation" border="0">
-            <tr><td> </td> </tr> 
+ <img src="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/images/Side Bar Pics.jpg" width="432" height="432">
       </table>
-    </td>
+    <img src="../../../../Documents/Unnamed Site 2/Side Bar Pics.jpg" width="216" height="864">    </td>
     <td width="989" bgcolor="white">
       <form enctype="multipart/form-data" 
-                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+                  action="<?php echo "file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="FileList" id="FileList" border="0">
         <?php 
-        $mydir = "$FILE_STORE/$_SESSION[user_name]";
-        $file_dir = opendir($mydir);
+        $file_dir = opendir("$FILE_STORE/$_SESSION[user_name]");
         if (!$file_dir) die("Can't see directory.");
         $id = 0;
         while($myfile = readdir($file_dir)){
-            if ($myfile == "." || $myfile == "..") continue;
-            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/><a href="%s/%s">%s</a></td></tr>', $myfile, $mydir, $myfile, $myfile);
+            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/>%s</td></tr>', $myfile, $myfile);
         } 
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
         </table>
       </form>
-      <img src="images/side_bar.jpg" width="216" height="864" />      </td><td width="989" bgcolor="white">
       <form enctype="multipart/form-data" 
-                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+                  action="<?php echo "file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
           <tr>
             <td>
@@ -107,13 +102,13 @@ if (array_key_exists('delete', $_POST)){
           </tr>
           <tr>
             <td>
-              <a href="<?php echo "$FILE_URL/$_SESSION[user_name]"; ?>">
+              <a href="<?php echo "file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/$FILE_URL/$_SESSION[user_name]"; ?>">
                 User directory</a>
             </td>
           </tr> 
           <tr> 
             <td>
-              <a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a> 
+              <a href="<?php echo "file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/$URL_BASE/login.php?logout"; ?>">Logout</a> 
             </td>
           </tr>
         </table>

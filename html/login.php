@@ -54,31 +54,20 @@ if (array_key_exists('logout', $_POST)){
 <HTML> 
 <HEAD>
   <TITLE>Honeycomb Login</TITLE>
+<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+  <link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
-
-<link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
-<link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" rel="stylesheet" type="text/css">
-<script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-<script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
-<script type="text/xml">
-<!--
-<oa:widgets>
-  <oa:widget wid="2444522" binding="#OAWidget" />
-</oa:widgets>
--->
-</script>
 <table cellspacing="1" cellpadding="0" border="0"
-    id="shell" height="639" width="1168">
+    id="shell" height="471" width="1168">
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><a title="TheHoneycombBanner1 by devgurl36!"><img src="images/banner2.jpg" width="1159" height="168" alt="TheHoneycombBanner1"></a></td></tr>
+            <tr><td width="1195"><img src="images/Honeycomb Logo 2.jpg" width="1157" height="137" alt="Honeycomb Logo 2"></a></td></tr>
          </table>
       </td>
-   </tr>
+  </tr>
    <tr height="200">
-   
         
       <td width="219"><a href="<?php echo "$URL_BASE/register.php" ; ?>">Register a new account</a></td>
        
@@ -167,6 +156,7 @@ if (array_key_exists('logout', $_POST)){
             </tr>
         </table>
     </form></td></tr>
+<<<<<<< HEAD
          </table>
       <img src="images/bigbox.jpg" width="432" height="432">      </td>
       </td>
@@ -174,12 +164,28 @@ if (array_key_exists('logout', $_POST)){
 </table> 
 
 <style>
+=======
+        </table>
+         <script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+         <script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
+         <script type="text/xml">
+<!--
+<oa:widgets>
+  <oa:widget wid="2444522" binding="#OAWidget" />
+</oa:widgets>
+-->
+         </script>
+         <br>
+         <a href="register.php">Register a new account</a><br>
+     <style>
+>>>>>>> f13e280ff351938350896fdac2e31a66cd5af18d
         .ygtvitem {
             font-family:Verdana, Geneva, sans-serif;
         }
-    </style>
-
-    
+         </style>
+     <img src="images/bigbox.jpg" width="432" height="452">
+     <img src="images/cell_dot.jpg" width="696" height="451">
+     </table>
 </BODY>
 </HTML>
 
