@@ -156,7 +156,6 @@ if (array_key_exists('logout', $_POST)){
             </tr>
         </table>
     </form></td></tr>
-<<<<<<< HEAD
          </table>
       <img src="images/bigbox.jpg" width="432" height="432">      </td>
       </td>
@@ -164,21 +163,6 @@ if (array_key_exists('logout', $_POST)){
 </table> 
 
 <style>
-=======
-        </table>
-         <script src="include/yui/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
-         <script src="include/yui/2.8.2r1/build/treeview/treeview-min.js" type="text/javascript"></script>
-         <script type="text/xml">
-<!--
-<oa:widgets>
-  <oa:widget wid="2444522" binding="#OAWidget" />
-</oa:widgets>
--->
-         </script>
-         <br>
-         <a href="register.php">Register a new account</a><br>
-     <style>
->>>>>>> f13e280ff351938350896fdac2e31a66cd5af18d
         .ygtvitem {
             font-family:Verdana, Geneva, sans-serif;
         }
