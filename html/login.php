@@ -78,6 +78,14 @@ if (array_key_exists('logout', $_POST)){
       </td>
    </tr>
    <tr height="200">
+   
+        
+      <td width="219"><a href="<?php echo "$URL_BASE/register.php" ; ?>">Register a new account</a></td>
+       
+     <td width="946" bgcolor="white">
+   
+   
+   <tr height="200">
       <td width="260" bgcolor="white">
          <table id="navigation" title="Navigation" border="0">
          
@@ -160,11 +168,11 @@ if (array_key_exists('logout', $_POST)){
         </table>
     </form></td></tr>
          </table>
+      <img src="images/bigbox.jpg" width="432" height="432">      </td>
       </td>
    </tr>
-</table> <br>
-<a href="register.php" ; ?>">Register a new account</a><br>
- 
+</table> 
+
 <style>
         .ygtvitem {
             font-family:Verdana, Geneva, sans-serif;

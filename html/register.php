@@ -85,7 +85,7 @@ if (array_key_exists('verify', $_GET)){
 -->
 </script>
 <table cellspacing="1" cellpadding="0" border="0"
- bgcolor="black" id="shell" height="639" width="1168">
+ id="shell" height="639" width="1168">
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
@@ -96,7 +96,10 @@ if (array_key_exists('verify', $_GET)){
    <tr height="200">
    
         
-      </td><td width="397" bgcolor="white">
+      <td width="219"></td>
+        <img src="images/side_bar.jpg" alt="sidebanner" width="216" height="864" />
+        <img src="images/side_bar.jpg" alt="" width="216" height="864" />
+
      
          <table title="Content" id="content" border="0">
             <tr><td><form action="<?php echo $_SERVER['PHP_SELF']; ?>" 

@@ -59,8 +59,8 @@ if (array_key_exists('delete', $_POST)){
       <table title="Banner" id="banner" border="0">
         <tr>
           <td width="1195">
-            <img src="images/banner.jpg" 
-              width="1157" height="137" alt="TheHoneycombBanner1">
+            <img src="images/banner2.jpg" 
+              width="1160" height="168" alt="TheHoneycombBanner1">
           </td>
         </tr>
       </table>
@@ -69,9 +69,7 @@ if (array_key_exists('delete', $_POST)){
   <tr height="200">
     <td width="176" bgcolor="white">
       <table id="navigation" title="Navigation" border="0">
-        <tr><td>Links!</td></tr>
-        <tr><td>Links!</td></tr>
-        <tr><td>Links!</td></tr>
+            <tr><td> </td> </tr> 
       </table>
     </td>
     <td width="989" bgcolor="white">
@@ -79,16 +77,18 @@ if (array_key_exists('delete', $_POST)){
                   action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="FileList" id="FileList" border="0">
         <?php 
-        $file_dir = opendir("$FILE_STORE/$_SESSION[user_name]");
+        $mydir = "$FILE_STORE/$_SESSION[user_name]";
+        $file_dir = opendir($mydir);
         if (!$file_dir) die("Can't see directory.");
         $id = 0;
         while($myfile = readdir($file_dir)){
-            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/>%s</td></tr>', $myfile, $myfile);
+            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/><a href="%s/%s">%s</a></td></tr>', $myfile, $mydir, $myfile, $myfile);
         } 
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
         </table>
       </form>
+      <img src="images/side_bar.jpg" width="216" height="864" />      </td><td width="989" bgcolor="white">
       <form enctype="multipart/form-data" 
                   action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
