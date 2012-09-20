@@ -94,12 +94,12 @@ if (array_key_exists('verify', $_GET)){
       </td>
    </tr>
    <tr height="200">
-       <td width="216" bgcolor="white">
+       <td width="218" bgcolor="white">
       <table id="navigation" title="Navigation" border="0">
  <img src="file:///Macintosh HD/Users/robinmays/honeycomb-t4/html/images/Side Bar Pics.jpg" width="432" height="432">
       </table>      <img src="images/Side Bar Pics.jpg" width="216" height="864">    
         
-      <td width="219"></td>
+      <td width="944"></td>
         <img src="images/side_bar.jpg" alt="sidebanner" width="216" height="864" />
         <img src="images/side_bar.jpg" alt="" width="216" height="864" />
 
@@ -128,7 +128,7 @@ if (array_key_exists('verify', $_GET)){
 		</table>
 	</form></td></tr>
          </table>
-      </td>
+      <td width="2"></td>
    </tr>
 </table>
  

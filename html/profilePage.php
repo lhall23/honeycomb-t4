@@ -55,24 +55,15 @@ if (array_key_exists('delete', $_POST)){
 <table cellspacing="1" cellpadding="0" border="0" 
     bgcolor="black" id="shell" height="639" width="1168">
   <tr height="50">
-    <td height="83" colspan="2" bgcolor="white">
-      <table title="Banner" id="banner" border="0">
-        <tr>
-          <td width="1195">
-            <img src="images/banner2.jpg" 
-              width="1160" height="168" alt="TheHoneycombBanner1">
-          </td>
-        </tr>
-      </table>
-    </td>
+    <td height="83" colspan="2" bgcolor="white"><img src="images/Honeycomb Logo 2.jpg" width="1157" height="137" alt="Honeycomb Logo 2"></td>
   </tr>
   <tr height="200">
-    <td width="176" bgcolor="white">
+    <td width="216" bgcolor="white">
       <table id="navigation" title="Navigation" border="0">
             <tr><td> </td> </tr> 
       </table>
-    </td>
-    <td width="989" bgcolor="white">
+    <img src="images/Side Bar Pics.jpg" width="216" height="864" />    </td>
+    <td width="959" bgcolor="white">
       <form enctype="multipart/form-data" 
                   action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="FileList" id="FileList" border="0">
@@ -89,35 +80,25 @@ if (array_key_exists('delete', $_POST)){
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
         </table>
-      </form>
-      <img src="images/side_bar.jpg" width="216" height="864" />      </td><td width="989" bgcolor="white">
-      <form enctype="multipart/form-data" 
-                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
           <tr>
-            <td>
-              <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-                Choose a file to upload: 
-            </td>
-            <td>
-              <input name="uploadedfile" type="file" />
-            </td>
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+              Choose a file to upload: </td>
+            <td><input name="uploadedfile" type="file" /></td>
           </tr>
           <tr>
             <td><input type="submit" value="Upload File" /></td>
           </tr>
           <tr>
-            <td>
-              <a href="<?php echo "$FILE_URL/$_SESSION[user_name]"; ?>">
-                User directory</a>
-            </td>
-          </tr> 
-          <tr> 
-            <td>
-              <a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a> 
-            </td>
+            <td><a href="<?php echo "$FILE_URL/$_SESSION[user_name]"; ?>"> User directory</a></td>
+          </tr>
+          <tr>
+            <td><a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a></td>
           </tr>
         </table>
+      </form></td><td width="4" bgcolor="white">
+      <form enctype="multipart/form-data" 
+                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
       </form>
     </td>
   </tr>

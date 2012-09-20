@@ -63,9 +63,9 @@ if (array_key_exists('logout', $_POST)){
    <tr height="50">
       <td height="83" colspan="2" bgcolor="white">
          <table title="Banner" id="banner" border="0">
-            <tr><td width="1195"><img src="images/Honeycomb Logo 2.jpg" width="1157" height="137" alt="Honeycomb Logo 2"></a></td></tr>
+            <tr><td width="1195"></a></td></tr>
          </table>
-      </td>
+      <img src="images/Honeycomb Logo 2.jpg" width="1221" height="137" alt="Honeycomb Logo 2">      </td>
   </tr>
    <tr height="200">
         
@@ -167,9 +167,7 @@ if (array_key_exists('logout', $_POST)){
             font-family:Verdana, Geneva, sans-serif;
         }
          </style>
-     <img src="images/bigbox.jpg" width="432" height="452">
-     <img src="images/cell_dot.jpg" width="696" height="451">
-     </table>
+</table>
 </BODY>
 </HTML>
 
