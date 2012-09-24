@@ -11,37 +11,101 @@
     require_once('include/conf.php');
     // Where the file is going to be placed 
     $target_path = "$FILE_STORE/$_SESSION[user_name]/";
-?>
 
-<?php
+function gen_filename($seed){
+    // bind some params to more readable variables and get a starting filename
+    $cur_date=date("r");
+    $target_name=sha1($seed . $cur_date . mt_rand());
+    $target_name=substr($target_name,0,1) . "/$target_name";
+    return $target_name;
+}
+
 if (array_key_exists('uploadedfile', $_FILES)){
     /* Add the original filename to our target path.  
         Result is "uploads/filename.extension" */
-    $target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
 
-    if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-        echo "The file ".  basename( $_FILES['uploadedfile']['name']). 
-        " has been uploaded";
-    } else{
-        trigger_error("Failed to save file as $target_path");
-        echo "There was an error uploading the file, please try again!";
+    // Generate a filename. Try until we get one that's not in use. The
+    // likelyhood that this fails to terminate is miniscule.
+    // A race condition is possible, but even more unlikely than collisions,
+    // and as the user does not control all of the input data to the hash,
+    // manufactured ones should be practically impossible.
+
+    $src_file_name=basename($_FILES['uploadedfile']['name']);
+    $target_file_name=gen_filename($src_file_name);
+    while(file_exists("$FILE_STORE/$target_file_name")){
+        $file_name=gen_filename($target_file_name);
+    }
+
+    if(!move_uploaded_file($_FILES['uploadedfile']['tmp_name'], 
+            "$FILE_STORE/$target_file_name")) {
+        $msg="Failed to save $src_file_name as $FILE_STORE/$target_file_name";
+        trigger_error($msg);
+        header("Location: $_SERVER[PHP_SELF]?msg=Error uploading file.");
+        die($msg);
+    }
+
+    $store_file_sql="INSERT INTO files(user_id,file_name,location)" .
+        "VALUES ($1, $2, $3)";
+    $params=array($_SESSION['user_id'], $src_file_name, $target_file_name); 
+    $file_res=pg_query_params($conn, $store_file_sql, $params);
+    if (!$file_res || pg_affected_rows($file_res) != 1){
+        $msg="Failed to insert file into database. Deleting file.";
+        // Nuke the file, since we can't track it. No need to check returns --
+        // if this fails, there's not anything we can do about it.
+        unlink("$FILE_STORE/$file_name");
+        trigger_error($msg);
+        header("Location: $_SERVER[PHP_SELF]?msg=Error uploading file.");
+        die($msg);
     }
 }
 
 if (array_key_exists('delete', $_POST)){
+    $fetch_sql="SELECT location FROM files WHERE file_id=$1";
+    pg_prepare("get_file", $fetch_sql);
+    $delete_sql="DELETE FROM files WHERE file_id=$1";
+    pg_prepare("del_file", $delete_sql);
+
+    // This would be problematic for bulk deletes, since we're iterating over
+    // what could be one query, but as the user has to independently select 
+    // each file to delete, it doesn't seem like sanitizing the array input is
+    // worth the time it would take.
     foreach ($_POST['filelist'] as $myfile){
-        if (strstr('/', $myfile)){
-            die("Please don't be rude. That's not a filename I gave you.");
+        $params=array($myfile);
+        $query_res=pg_execute($conn, "get_file", $params);
+
+        if (!$query_res || pg_num_rows($query_res)!=1){
+            $msg="Can't find file $myfile.";
+            trigger_error($msg);
+            die($msg);
         }
-        if (! unlink("$FILE_STORE/$_SESSION[user_name]/$myfile")) {
-            die("Unable to delete $myfile.");
+        $row=pg_fetch_assoc($query_res);
+        $file_loc=$row['location'];
+        if (! unlink("$FILE_STORE/$file_loc")) {
+            $msg="Unable to delete from $file_loc.";
+            trigger_error($msg);
+            die($msg);
         }
+        pg_free_result($query_res);
+        
+        $query_res=pg_execute($conn, "del_file", $params);
+        if (!$query_res || pg_affected_rows($query_res)) {
+            $msg="Unable to remove from $myfile from database.";
+            trigger_error($msg);
+            die($msg);
+        }
+        pg_free_result($query_res);
     }
 }
 ?>
 
 <?php
-    print "Welcome $_SESSION[user_name]";
+    print "Welcome $_SESSION[user_name]<br>";
+    if (array_key_exists("msg", $_GET)){
+        // Does this actually sanitixe enough, or can we still end up with XSS
+        // attacks here?
+        echo htmlentities($_GET['msg']);
+    }
+    echo "<br>";
 ?>
 
 <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
@@ -77,14 +141,22 @@ if (array_key_exists('delete', $_POST)){
                   action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="FileList" id="FileList" border="0">
         <?php 
-        $mydir = "$FILE_STORE/$_SESSION[user_name]";
-        $myurl = "$FILE_URL/$_SESSION[user_name]";
-        $file_dir = opendir($mydir);
-        if (!$file_dir) die("Can't see directory.");
-        $id = 0;
-        while($myfile = readdir($file_dir)){
-            if ($myfile == "." || $myfile == "..") continue;
-            printf ('<tr><td><input type="checkbox" value="%s" name="filelist[]"/><a href="%s/%s">%s</a></td></tr>', $myfile, $myurl, $myfile, $myfile);
+
+        $query = "SELECT * FROM files WHERE user_id=$1"; 
+        $params = array($_SESSION['user_id']);
+        $result = pg_query_params($conn, $query, $params); 
+        if (!$result) { 
+            $msg="Failed to get file listing.";
+            trigger_error($msg); 
+            die($msg); 
+        } 
+
+        while($myrow = pg_fetch_assoc($result)) {
+            echo '<tr><td><input type="checkbox" ';
+            printf('value="%s" name="filelist[]"/><a href="%s/%s">%s</a>', 
+                $myrow['file_id'], $FILE_URL, $myrow['location'], 
+                $myrow['file_name']); 
+            echo '</td></tr>';
         } 
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
