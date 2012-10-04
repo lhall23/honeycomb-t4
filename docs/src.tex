@@ -1,0 +1,43 @@
+\documentclass{article}
+\newcommand{\Title}{src}
+\newcommand{\Author}{Lee Hall}
+\newcommand{\Date}{Thu 20 Sep 2012 12:30:21 PM EDT}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{listings}
+\usepackage[margin=1in]{geometry}
+\InputIfFileExists{header.tex}{}{
+	\title{\Title}
+	\author{\Author}
+	\date{\Date}
+}
+\begin{document}
+\section{Headers and Helpers}
+\lstinputlisting{../html/include/conf.php}
+\lstinputlisting{../html/include/session.php}
+\lstinputlisting{../html/index.php}
+
+\newpage
+
+\section{Login}
+\lstinputlisting{../html/login.php}
+
+\newpage
+
+\section{Main}
+\lstinputlisting{../html/profilePage.php}
+
+\newpage
+
+\section{Registration}
+\lstinputlisting{../html/register.php}
+
+\newpage
+
+\section{Schema}
+\lstinputlisting{../honeycomb.sql}
+
+\newpage
+
+\end{document}
