@@ -91,7 +91,7 @@ if (array_key_exists('delete', $_POST)){
         </table>
         <table title="Content" id="content" border="0">
           <tr>
-            <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
               Choose a file to upload: </td>
             <td><input name="uploadedfile" type="file" /></td>
           </tr>
