@@ -37,8 +37,15 @@ if (array_key_exists('login', $_POST)){
         $_SESSION['user_id']=$row['user_id'];
         $_SESSION['user_dir_fs']=$FILE_STORE . $row['user_id'];
         $_SESSION['user_dir_url']=$FILE_URL . $row['user_id'];
-        header("Location: profilePage.php");
-        die("Done loading user.");
+        if($_SESSION['user_name'] == "admin")
+		{
+			header("Location: Admin.php");
+			die("Done loading Admin");
+		}
+		
+		header("Location: profilePage.php");
+		
+		die("Done loading user.");
     } else {
         header("Location: $_SERVER[PHP_SELF]?msg=Bad Password");
         // This leaks information about whether or not a user exists on the
