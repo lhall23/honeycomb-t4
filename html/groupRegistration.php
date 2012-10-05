@@ -64,12 +64,13 @@ if (array_key_exists('register', $_POST)){
     die("Unable to create user file system.");
   }
   --------*/ 
-  $sql="UPDATE groups SET auth_hash=NULL WHERE group_id=$1;";
+  /*$sql="UPDATE groups SET auth_hash=NULL WHERE group_id=$1;";
   $params=array($row['group_id']);
   $results=pg_query_params($conn, $sql, $params);
   if (!$results || pg_affected_rows($results) != 1){
     die("Database error verifying user.");
   }
+  */
   header("Location: groupProfilePage.php");
   die("Group created succesfully.");
 
