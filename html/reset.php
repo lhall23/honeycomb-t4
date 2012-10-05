@@ -49,7 +49,7 @@ if (array_key_exists('reset', $_POST)){
 	}
 }
 
-}
+
 ?>
 
 <HTML> 
