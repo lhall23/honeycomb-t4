@@ -11,7 +11,7 @@ require_once('include/conf.php');
 //Is someone trying to get their account verified?
 if (array_key_exists('verify', $_GET)){
 	if (!array_key_exists('password', $_POST) || 
-			!array_key_exists('passwordC', $_POST)))
+			!array_key_exists('passwordC', $_POST))
 		{die("how did i get here");}
 	if($_POST['password']==$_POST['passwordC'])
 	{
