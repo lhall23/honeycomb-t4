@@ -17,8 +17,16 @@ if (array_key_exists('login', $_POST)){
 	$UserName=strtolower($_POST['user_name']);
     // Get user info from database. Only retrieve users who have authenticated
     // their accounts.
-    $sql="SELECT user_id,password,quota FROM users 
-        WHERE user_name=$1 AND auth_hash IS NULL;";
+    // If this gets slow, we can pull the quota after getting user_id so we
+    // don't have to scan the whole files table, but this works for now
+    $sql="SELECT user_id,password,quota - files.space AS free_space
+            FROM users                                                                      
+            JOIN (                                                                              
+                SELECT user_id,SUM(size) AS space                                                   
+                    FROM files                                                                      
+                    GROUP BY user_id                                                        
+            ) AS files USING (user_id)                                                      
+            WHERE user_name='test' AND auth_hash IS NULL;";
     $params=array($UserName);
     $results=pg_query_params($conn, $sql, $params);
     assert('pg_num_rows($results) <= 1 /*uniqueness violation in database*/');
@@ -35,7 +43,7 @@ if (array_key_exists('login', $_POST)){
         session_start();
         $_SESSION['user_name']=$UserName;
         $_SESSION['user_id']=$row['user_id'];
-        $_SESSION['user_quota']=$row['quota'];
+        $_SESSION['user_free_space']=$row['free_space'];
         $_SESSION['user_dir_fs']=$FILE_STORE . $row['user_id'];
         $_SESSION['user_dir_url']=$FILE_URL . $row['user_id'];
         if($_SESSION['user_name'] == "admin")

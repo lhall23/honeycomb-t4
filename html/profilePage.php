@@ -22,23 +22,12 @@ function gen_filename($seed){
 
 if (array_key_exists('uploadedfile', $_FILES)){
 
-    $check_quota_sql="SELECT SUM(size) AS usage FROM files WHERE user_id=$1;";
     $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
         "VALUES ($1, $2, $3, $4);";
 
-    // Check the current amount of space in use. This aggregate must always
-    // return exactly 1 row, unless there is a database or schema failure. 
-    $params=array($_SESSION['user_id']);
-    $disk_usage_res=pg_query_params($check_quota_sql, $params);
-    assert('$disk_usage_res /*Unknown database error*/');
-
-	$disk_usage_row=pg_fetch_array($disk_usage_res);
-    $disk_usage=$disk_usage_row['usage'];
-    pg_free_result($disk_usage_res);
-
     //Check if we're going to go over the quota
     $file_size=$_FILES['uploadedfile']['size'];
-    if ($disk_usage + $file_size > $_SESSION['user_quota']){
+    if ($_SESSION['user_free_space'] < $file_size){
         $msg="This would exceed your quota of $_SESSION[user_quota] bytes.";
         header("Location: $_SERVER[PHP_SELF]?msg=$msg");
         die($msg);
