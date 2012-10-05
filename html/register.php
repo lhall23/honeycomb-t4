@@ -36,7 +36,7 @@ if (array_key_exists('register', $_POST)){
   $sql="INSERT INTO users(user_name,password,email,auth_hash) VALUES 
     ($1, $2, $3, $4);";
   $params=array($_POST['user_name'], md5($_POST['password']), 
-    $_POST['email'], $token);
+    strtolower($_POST['email']), $token);
   $results=pg_query_params($conn, $sql, $params);
   if (!$results || pg_affected_rows($results) != 1) {
     //There has to be a more elegant way to do this.
