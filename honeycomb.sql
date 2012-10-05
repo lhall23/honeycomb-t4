@@ -60,8 +60,8 @@ COMMENT ON TABLE group_members IS 'join table for users and groups';
 INSERT INTO USERS(user_name,password,email) 
     VALUES ('test', md5('test'), 'test@test.com');
 
-INSERT INTO USERS(user_name,password) 
-    VALUES ('admin', md5('admin'));
+INSERT INTO USERS(user_name,password,email) 
+    VALUES ('admin', md5('admin') , 'admin@test.com');
 COMMIT;
 
 
