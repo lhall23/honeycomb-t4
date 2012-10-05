@@ -12,7 +12,7 @@ require_once('include/conf.php');
 
 
 //Is there a user trying to register?
-if (array_key_exists('groupRegister', $_POST)){
+if (array_key_exists('group_id', $_POST)){
 
   if (!array_key_exists('group_name', $_POST))
   {
