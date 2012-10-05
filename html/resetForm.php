@@ -25,10 +25,6 @@ if (array_key_exists('verify', $_GET)){
 		{
 		die("Invlid or nonmatching password");
 		}
-    else
-	{
-	die ("Permision Denied");
-	}
 
 }
 else
