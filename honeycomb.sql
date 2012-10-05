@@ -28,7 +28,8 @@ CREATE TABLE files (
     user_id     INTEGER NOT NULL 
         REFERENCES users(user_id) ON DELETE CASCADE, 
     file_name   varchar,
-    location    varchar UNIQUE
+    location    varchar UNIQUE,
+	size		INTEGER NOT NULL
 );
 
 DROP TABLE IF EXISTS groups CASCADE;    

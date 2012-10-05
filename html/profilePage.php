@@ -44,9 +44,10 @@ if (array_key_exists('uploadedfile', $_FILES)){
         die($msg);
     }
 
-    $store_file_sql="INSERT INTO files(user_id,file_name,location)" .
-        "VALUES ($1, $2, $3)";
-    $params=array($_SESSION['user_id'], $src_file_name, $target_file_name); 
+    $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
+        "VALUES ($1, $2, $3, $4)";
+    $params=array($_SESSION['user_id'], $src_file_name, $target_file_name,
+        $_FILES['uploadedfile']['size']); 
     $file_res=pg_query_params($conn, $store_file_sql, $params);
     if (!$file_res || pg_affected_rows($file_res) != 1){
         $msg="Failed to insert file into database. Deleting file.";
@@ -60,7 +61,7 @@ if (array_key_exists('uploadedfile', $_FILES)){
 }
 
 if (array_key_exists('delete', $_POST)){
-    $fetch_sql="SELECT location FROM files WHERE file_id=$1";
+    $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
     pg_prepare("get_file", $fetch_sql);
     $delete_sql="DELETE FROM files WHERE file_id=$1";
     pg_prepare("del_file", $delete_sql);
