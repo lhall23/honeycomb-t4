@@ -14,10 +14,6 @@ require_once('include/conf.php');
 //Is there a user trying to register?
 if (array_key_exists('group_name', $_POST)){
 
-  if (!array_key_exists('group_id', $_POST))
-  {
-    die("Group name not set. How did you get here?");
-  }
 
     //Make sure that no one's doing anything tricksey with the groupname,
     //since it gets used as a filename for the moment
@@ -50,12 +46,17 @@ if (array_key_exists('group_name', $_POST)){
     	 }
 		 
     header("Location: $_SERVER[PHP_SELF]?msg=$msg");
-  } else {
+  } else{
 	  
 	header("Location: groupProfilePage.php");
     die("Group created succesfully.");
   }
 }
+  else 
+  { 
+  die("Group name not set. How did you get here?");
+  }
+
 
 
 
