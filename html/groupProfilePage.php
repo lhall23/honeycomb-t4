@@ -31,7 +31,8 @@ if (array_key_exists('uploadedfile', $_FILES)){
     $params=array($_SESSION['user_id']);
     $disk_usage_res=pg_query_params($check_quota_sql, $params);
     assert('$disk_usage_res /*Unknown database error*/');
-    $disk_usage=pg_fetch_array($disk_usage_res)[0];
+    $disk_usage_row=pg_fetch_array($disk_usage_res);
+	$disk_usage = $disk_usage_row[0];
     pg_free_result($disk_usage_res);
 
     //Check if we're going to go over the quota
