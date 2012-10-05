@@ -171,7 +171,7 @@ if (array_key_exists('delete', $_POST)){
             <td><input type="submit" value="Upload File" /></td>
           </tr>
           <tr>
-            <td><a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a></td>
+            <td><a href="<?php echo "login.php?logout"; ?>">Logout</a></td>
           </tr>
         </table>
       </form></td><td width="4" bgcolor="white">

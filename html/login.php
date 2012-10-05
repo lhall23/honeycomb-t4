@@ -54,8 +54,14 @@ if (array_key_exists('login', $_POST)){
         die("Bad password.");
     }
 }
-if (array_key_exists('logout', $_POST)){
+if (array_key_exists('logout', $_GET)){
+
+    // Make sure the session's started so we have access to the variables we
+    // want to clear
+    session_start();
+    $_SESSION=array();
     session_destroy();
+
     header("Location: $_SERVER[PHP_SELF]");
     die("Reloading login page.");
 }
@@ -63,6 +69,7 @@ if (array_key_exists('logout', $_POST)){
 <HTML> 
 <HEAD>
   <TITLE>Honeycomb Login</TITLE>
+
 <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
     rel="stylesheet" type="text/css">
 <link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" 
