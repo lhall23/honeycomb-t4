@@ -4,7 +4,7 @@
 ?>
 <HTML>
 <HEAD>
-    <TITLE>User Profile</TITLE>
+    <TITLE>Admin Profile</TITLE>
 </HEAD>
 <BODY>
 <?php
@@ -111,7 +111,7 @@ if (array_key_exists('delete', $_POST)){
         <?php 
 
         $query = "SELECT * FROM files;"; 
-        $params = array($_SESSION['user_id']);
+        $params = array($_SESSION['files']);
         $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
             $msg="Failed to get file listing.";
