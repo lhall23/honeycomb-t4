@@ -21,6 +21,8 @@ CREATE TABLE users (
 COMMENT ON COLUMN users.password IS 'sha1 hash of password';
 COMMENT ON COLUMN users.auth_hash IS 
     'onetime key used for registration and lost passwords';
+COMMENT ON COLUMN users.quota IS 
+	'user quota in bytes';
 
 DROP TABLE IF EXISTS files CASCADE; 
 CREATE TABLE files (

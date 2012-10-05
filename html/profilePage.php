@@ -21,8 +21,26 @@ function gen_filename($seed){
 }
 
 if (array_key_exists('uploadedfile', $_FILES)){
-    /* Add the original filename to our target path.  
-        Result is "uploads/filename.extension" */
+
+    $check_quota_sql="SELECT SUM(size) FROM files WHERE user_id=$1;";
+    $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
+        "VALUES ($1, $2, $3, $4);";
+
+    // Check the current amount of space in use. This aggregate must always
+    // return exactly 1 row, unless there is a database or schema failure. 
+    $params=array($_SESSION['user_id']);
+    $disk_usage_res=pg_query_params($check_quota_sql, $params);
+    assert('$disk_usage_res /*Unknown database error*/');
+    $disk_usage=pg_fetch_array($disk_usage_res)[0];
+    pg_free_result($disk_usage_res);
+
+    //Check if we're going to go over the quota
+    $file_size=$_FILES['uploadedfile']['size'];
+    if ($disk_usage + $file_size > $_SESSION['user_quota']){
+        $msg="This would exceed your quota of $_SESSION[user_quota] bytes.";
+        header("Location: $_SERVER[PHP_SELF]?msg=$msg");
+        die($msg);
+    }
 
     // Generate a filename. Try until we get one that's not in use. The
     // likelyhood that this fails to terminate is miniscule.
@@ -44,10 +62,8 @@ if (array_key_exists('uploadedfile', $_FILES)){
         die($msg);
     }
 
-    $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
-        "VALUES ($1, $2, $3, $4)";
     $params=array($_SESSION['user_id'], $src_file_name, $target_file_name,
-        $_FILES['uploadedfile']['size']); 
+        $file_size); 
     $file_res=pg_query_params($conn, $store_file_sql, $params);
     if (!$file_res || pg_affected_rows($file_res) != 1){
         $msg="Failed to insert file into database. Deleting file.";
