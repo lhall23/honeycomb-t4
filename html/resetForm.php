@@ -16,7 +16,7 @@ if (array_key_exists('verify', $_GET)){
 	{
 	$sql="UPDATE users Set password=MD5($2) , Auth_Hash=null WHERE Auth_Hash=$1;";
 	
-	$params=array($_GET['verfy'],'Password');
+	$params=array($_GET['verfy'],'password');
     $results=pg_query_params($conn, $sql, $params);
 	
 	}
