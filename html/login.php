@@ -92,6 +92,13 @@ if (array_key_exists('logout', $_GET)){
       <td width="219"><a href="register.php">"Register a new account</a></td>
        
      <td width="946" bgcolor="white">
+	 </tr>
+	 <tr height="200">
+        
+      <td width="219"><a href="reset.php">"Forgot password</a></td>
+       
+     <td width="946" bgcolor="white">
+	 </tr>
    
    
    <tr height="200">
