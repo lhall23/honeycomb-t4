@@ -21,6 +21,8 @@ CREATE TABLE users (
 COMMENT ON COLUMN users.password IS 'sha1 hash of password';
 COMMENT ON COLUMN users.auth_hash IS 
     'onetime key used for registration and lost passwords';
+COMMENT ON COLUMN users.quota IS 
+	'user quota in bytes';
 
 DROP TABLE IF EXISTS files CASCADE; 
 CREATE TABLE files (
@@ -28,7 +30,8 @@ CREATE TABLE files (
     user_id     INTEGER NOT NULL 
         REFERENCES users(user_id) ON DELETE CASCADE, 
     file_name   varchar,
-    location    varchar UNIQUE
+    location    varchar UNIQUE,
+	size		INTEGER NOT NULL
 );
 
 DROP TABLE IF EXISTS groups CASCADE;    
@@ -60,8 +63,8 @@ COMMENT ON TABLE group_members IS 'join table for users and groups';
 INSERT INTO USERS(user_name,password,email) 
     VALUES ('test', md5('test'), 'test@test.com');
 
-INSERT INTO USERS(user_name,password) 
-    VALUES ('admin', md5('admin'));
+INSERT INTO USERS(user_name,password,email) 
+    VALUES ('admin', md5('admin') , 'admin@test.com');
 COMMIT;
 
 
