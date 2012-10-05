@@ -21,8 +21,26 @@ function gen_filename($seed){
 }
 
 if (array_key_exists('uploadedfile', $_FILES)){
-    /* Add the original filename to our target path.  
-        Result is "uploads/filename.extension" */
+
+    $check_quota_sql="SELECT SUM(size) FROM files WHERE user_id=$1;";
+    $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
+        "VALUES ($1, $2, $3, $4);";
+
+    // Check the current amount of space in use. This aggregate must always
+    // return exactly 1 row, unless there is a database or schema failure. 
+    $params=array($_SESSION['user_id']);
+    $disk_usage_res=pg_query_params($check_quota_sql, $params);
+    assert('$disk_usage_res /*Unknown database error*/');
+    $disk_usage=pg_fetch_array($disk_usage_res)[0];
+    pg_free_result($disk_usage_res);
+
+    //Check if we're going to go over the quota
+    $file_size=$_FILES['uploadedfile']['size'];
+    if ($disk_usage + $file_size > $_SESSION['user_quota']){
+        $msg="This would exceed your quota of $_SESSION[user_quota] bytes.";
+        header("Location: $_SERVER[PHP_SELF]?msg=$msg");
+        die($msg);
+    }
 
     // Generate a filename. Try until we get one that's not in use. The
     // likelyhood that this fails to terminate is miniscule.
@@ -44,9 +62,8 @@ if (array_key_exists('uploadedfile', $_FILES)){
         die($msg);
     }
 
-    $store_file_sql="INSERT INTO files(user_id,file_name,location)" .
-        "VALUES ($1, $2, $3)";
-    $params=array($_SESSION['user_id'], $src_file_name, $target_file_name); 
+    $params=array($_SESSION['user_id'], $src_file_name, $target_file_name,
+        $file_size); 
     $file_res=pg_query_params($conn, $store_file_sql, $params);
     if (!$file_res || pg_affected_rows($file_res) != 1){
         $msg="Failed to insert file into database. Deleting file.";
@@ -60,7 +77,7 @@ if (array_key_exists('uploadedfile', $_FILES)){
 }
 
 if (array_key_exists('delete', $_POST)){
-    $fetch_sql="SELECT location FROM files WHERE file_id=$1";
+    $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
     pg_prepare("get_file", $fetch_sql);
     $delete_sql="DELETE FROM files WHERE file_id=$1";
     pg_prepare("del_file", $delete_sql);
@@ -74,7 +91,7 @@ if (array_key_exists('delete', $_POST)){
         $query_res=pg_execute($conn, "get_file", $params);
 
         if (!$query_res || pg_num_rows($query_res)!=1){
-            $msg="Can't find file $myfile.";
+            $msg="Can't find file with id $myfile.";
             trigger_error($msg);
             die($msg);
         }
@@ -89,7 +106,7 @@ if (array_key_exists('delete', $_POST)){
         
         $query_res=pg_execute($conn, "del_file", $params);
         if (!$query_res || pg_affected_rows($query_res)) {
-            $msg="Unable to remove from $myfile from database.";
+            $msg="Unable to remove $myfile from from database.";
             trigger_error($msg);
             die($msg);
         }
@@ -161,6 +178,9 @@ if (array_key_exists('delete', $_POST)){
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
         </table>
+      </form>
+      <form enctype="multipart/form-data" 
+          action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
           <tr>
             <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
@@ -171,12 +191,10 @@ if (array_key_exists('delete', $_POST)){
             <td><input type="submit" value="Upload File" /></td>
           </tr>
           <tr>
-            <td><a href="<?php echo "$URL_BASE/login.php?logout"; ?>">Logout</a></td>
+            <td><a href="<?php echo "login.php?logout"; ?>">Logout</a></td>
           </tr>
         </table>
-      </form></td><td width="4" bgcolor="white">
-      <form enctype="multipart/form-data" 
-                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+      </td><td width="4" bgcolor="white">
       </form>
     </td>
   </tr>

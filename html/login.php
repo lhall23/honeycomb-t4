@@ -17,7 +17,7 @@ if (array_key_exists('login', $_POST)){
 
     // Get user info from database. Only retrieve users who have authenticated
     // their accounts.
-    $sql="SELECT user_id,password FROM users 
+    $sql="SELECT user_id,password,quota FROM users 
         WHERE user_name=$1 AND auth_hash IS NULL;";
     $params=array($_POST['user_name']);
     $results=pg_query_params($conn, $sql, $params);
@@ -35,6 +35,7 @@ if (array_key_exists('login', $_POST)){
         session_start();
         $_SESSION['user_name']=$_POST['user_name'];
         $_SESSION['user_id']=$row['user_id'];
+        $_SESSION['user_quota']=$row['quota'];
         $_SESSION['user_dir_fs']=$FILE_STORE . $row['user_id'];
         $_SESSION['user_dir_url']=$FILE_URL . $row['user_id'];
         if($_SESSION['user_name'] == "admin")
@@ -54,8 +55,14 @@ if (array_key_exists('login', $_POST)){
         die("Bad password.");
     }
 }
-if (array_key_exists('logout', $_POST)){
+if (array_key_exists('logout', $_GET)){
+
+    // Make sure the session's started so we have access to the variables we
+    // want to clear
+    session_start();
+    $_SESSION=array();
     session_destroy();
+
     header("Location: $_SERVER[PHP_SELF]");
     die("Reloading login page.");
 }
@@ -63,6 +70,7 @@ if (array_key_exists('logout', $_POST)){
 <HTML> 
 <HEAD>
   <TITLE>Honeycomb Login</TITLE>
+
 <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
     rel="stylesheet" type="text/css">
 <link href="include/yui/2.8.2r1/build/treeview/assets/skins/sam/treeview.css" 

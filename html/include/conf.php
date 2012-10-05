@@ -12,6 +12,11 @@ $conn= pg_connect($conn_str);
 if (!$conn) 
     die("Unable to connect to database.");
 
+function db_cleanup($conn){
+    pg_close($conn);
+}
+register_shutdown_function('db_cleanup', $conn);
+
 $URL_BASE="https://$_SERVER[SERVER_NAME]";
 $FILE_STORE="/var/www/honeycomb/file_store";
 $FILE_URL=$URL_BASE . "/file_store";

@@ -1,0 +1,6 @@
+docs/*log
+docs/*aux
+docs/*pdf
+html/include/yui
+html/file_store/?/*
+.DS_Store
