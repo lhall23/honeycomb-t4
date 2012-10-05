@@ -9,6 +9,7 @@
 // Yes, this makes a connection when we don't neccesarily need it. It's better
 // than repeating the include inside multiple branches, though
 require_once('include/conf.php');
+require_once('includ/session.php');
 
 
 //Is there a user trying to register?
