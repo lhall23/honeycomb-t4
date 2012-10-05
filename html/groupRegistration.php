@@ -33,7 +33,7 @@ if (array_key_exists('group_name', $_POST))
   $results=pg_query_params($conn, $sql, $params);
   
   $row= pg_fetch_array($results);
-  $sql="INSERT INTO group_members(group_id,user_name) VALUES 
+  $sql="INSERT INTO group_members(group_id,user_id) VALUES 
     ($1, $2);";
   $params=array($row['group_id'], $_SESSION['user_id']);
   $results=pg_query_params($conn, $sql, $params);
