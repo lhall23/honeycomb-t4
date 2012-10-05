@@ -73,16 +73,13 @@ if (array_key_exists('verify', $_GET)){
   $_SESSION['user_id']=$row['user_id'];
   $_SESSION['user_name']=$row['user_name'];
 
-  if (!mkdir("$FILE_STORE/$_SESSION[user_name]")) {
-    die("Unable to create user file system.");
-  } 
   $sql="UPDATE users SET auth_hash=NULL WHERE user_id=$1;";
   $params=array($row['user_id']);
   $results=pg_query_params($conn, $sql, $params);
   if (!$results || pg_affected_rows($results) != 1){
     die("Database error verifying user.");
   }
-  header("Location: profilePage.php");
+  header("Location: login.php?logout");
   die("User validated.");
 }
 ?>

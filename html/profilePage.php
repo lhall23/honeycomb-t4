@@ -22,7 +22,7 @@ function gen_filename($seed){
 
 if (array_key_exists('uploadedfile', $_FILES)){
 
-    $check_quota_sql="SELECT SUM(size) FROM files WHERE user_id=$1;";
+    $check_quota_sql="SELECT SUM(size) AS usage FROM files WHERE user_id=$1;";
     $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
         "VALUES ($1, $2, $3, $4);";
 
@@ -31,7 +31,9 @@ if (array_key_exists('uploadedfile', $_FILES)){
     $params=array($_SESSION['user_id']);
     $disk_usage_res=pg_query_params($check_quota_sql, $params);
     assert('$disk_usage_res /*Unknown database error*/');
-    $disk_usage=pg_fetch_array($disk_usage_res)[0];
+
+	$disk_usage_row=pg_fetch_array($disk_usage_res);
+    $disk_usage=$disk_usage_row['usage'];
     pg_free_result($disk_usage_res);
 
     //Check if we're going to go over the quota
@@ -183,7 +185,7 @@ if (array_key_exists('delete', $_POST)){
           action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
           <tr>
-            <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
               Choose a file to upload: </td>
             <td><input name="uploadedfile" type="file" /></td>
           </tr>
