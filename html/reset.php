@@ -27,14 +27,14 @@ if (array_key_exists('reset', $_POST)){
   $sql="SELECT COUNT(*) FROM users WHERE email=$1;";
   
   
-  $params=array($_POST['email']);
+  $params=array(strtolower($_POST['email']));
   $results=pg_query_params($conn, $sql, $params);
   if (!$results) {
     die("WE messed up!!!");
     
     
    // header("Location: $_SERVER[PHP_SELF]?msg=$msg");
-  } else if($results==1) {
+  } else if(1==pg_num_rows($results)) {
 	$token=md5(mt_rand());
 	$sql="UPDATE users Set auth_hash=$2 WHERE email=$1;";
 	$params=array($_POST['email'],$token);
