@@ -74,7 +74,7 @@ if (array_key_exists('delete', $_POST)){
         $query_res=pg_execute($conn, "get_file", $params);
 
         if (!$query_res || pg_num_rows($query_res)!=1){
-            $msg="Can't find file $myfile.";
+            $msg="Can't find file with id $myfile.";
             trigger_error($msg);
             die($msg);
         }
@@ -89,7 +89,7 @@ if (array_key_exists('delete', $_POST)){
         
         $query_res=pg_execute($conn, "del_file", $params);
         if (!$query_res || pg_affected_rows($query_res)) {
-            $msg="Unable to remove from $myfile from database.";
+            $msg="Unable to remove $myfile from from database.";
             trigger_error($msg);
             die($msg);
         }
@@ -161,6 +161,9 @@ if (array_key_exists('delete', $_POST)){
         ?> 
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
         </table>
+      </form>
+      <form enctype="multipart/form-data" 
+          action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
         <table title="Content" id="content" border="0">
           <tr>
             <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
@@ -174,9 +177,7 @@ if (array_key_exists('delete', $_POST)){
             <td><a href="<?php echo "login.php?logout"; ?>">Logout</a></td>
           </tr>
         </table>
-      </form></td><td width="4" bgcolor="white">
-      <form enctype="multipart/form-data" 
-                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+      </td><td width="4" bgcolor="white">
       </form>
     </td>
   </tr>
