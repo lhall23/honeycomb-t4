@@ -3,14 +3,14 @@
 ?>
 <HTML>
 <HEAD>
-    <TITLE>User Profile</TITLE>
+    <TITLE>Group Profile</TITLE>
 </HEAD>
 <BODY>
 <?php
     require_once('include/session.php');
     require_once('include/conf.php');
     // Where the file is going to be placed 
-    $target_path = "$FILE_STORE/$_SESSION[user_name]/";
+    $target_path = "$FILE_STORE/$_SESSION[group_name]/";
 
 function gen_filename($seed){
     // bind some params to more readable variables and get a starting filename
@@ -159,7 +159,7 @@ if (array_key_exists('delete', $_POST)){
         <table title="FileList" id="FileList" border="0">
         <?php 
 
-        $query = "SELECT * FROM files WHERE user_id=$1"; 
+        $query = "SELECT * FROM files INNER JOIN group_files ON(file_id) JOIN groups ON(group_id) JOIN group_member ON(group_id) WHERE file_id = group_files.file_id AND user_id <> group_member.user_id"; 
         $params = array($_SESSION['user_id']);
         $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
