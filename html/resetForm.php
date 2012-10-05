@@ -14,7 +14,7 @@ if (array_key_exists('verify', $_GET)){
 			!array_key_exists('PasswordC', $_POST))
 		if($_POST['Password']==$_POST['PasswordC'])
 	{
-	$sql="UPDATE users Set password=MD5($2) and Auth_Hash=null WHERE Auth_Hash=$1;";
+	$sql="UPDATE users Set password=MD5($2) set Auth_Hash=null WHERE Auth_Hash=$1;";
 	
 	$params=array($_GET['verfy'],'Password');
     $results=pg_query_params($conn, $sql, $params);
@@ -31,7 +31,7 @@ if (array_key_exists('verify', $_GET)){
 
 }
 else
-{die(" How are you here?");
+{die("SQL error?");
 }
 
 ?>
