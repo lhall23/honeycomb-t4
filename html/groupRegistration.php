@@ -29,7 +29,7 @@ if (array_key_exists('group_name', $_POST))
   //Get Group info from database
   $params=array($_POST['group_name']);
   $sql="INSERT INTO groups(group_name) VALUES 
-    ($2)RETURNING group_id;";
+    ($1) RETURNING group_id;";
   $results=pg_query_params($conn, $sql, $params);
   
   $row= pg_fetch_array($results);
