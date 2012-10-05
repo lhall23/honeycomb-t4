@@ -12,9 +12,9 @@ require_once('include/conf.php');
 
 
 //Is there a user trying to register?
-if (array_key_exists('group_id', $_POST)){
+if (array_key_exists('group_name', $_POST)){
 
-  if (!array_key_exists('group_name', $_POST))
+  if (!array_key_exists('group_id', $_POST))
   {
     die("Group name not set. How did you get here?");
   }
@@ -28,12 +28,15 @@ if (array_key_exists('group_id', $_POST)){
     }
 
   //Get Group info from database
-  $token=md5(mt_rand() . $_POST['group_name']);
-  $sql="INSERT INTO groups(group_id,group_name) VALUES 
-    ($1, $2);";
+  $params=array($_POST['group_name']);
+  $sql="INSERT INTO groups(group_name) VALUES 
+    ($2)RETURNING group_id;";
+  $results=pg_query_params($conn, $sql, $params);
+  
+  $row= pg_fetch_array($results);
   $sql="INSERT INTO group_members(group_id,user_name) VALUES 
     ($1, $2);";
-  $params=array($_POST['group_name']);
+  $params=array($row['group_id'], $_SESSION['user_id']);
   $results=pg_query_params($conn, $sql, $params);
   if (!$results || pg_affected_rows($results) != 1) {
     //There has to be a more elegant way to do this.
