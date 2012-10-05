@@ -48,6 +48,8 @@ if (array_key_exists('register', $_POST)){
 		 
     header("Location: $_SERVER[PHP_SELF]?msg=$msg");
   } else {
+	  
+	header("Location: groupProfilePage.php");
     die("Group created succesfully.");
   }
 }
@@ -71,14 +73,14 @@ if (array_key_exists('register', $_POST)){
     die("Database error verifying user.");
   }
   */
-  header("Location: groupProfilePage.php");
-  die("Group created succesfully.");
+  
+ 
 
 ?>
 
 <HTML> 
 <HEAD>
-<TITLE>Register</TITLE>
+<TITLE>Group Register</TITLE>
 </HEAD>
 <BODY>
 <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
