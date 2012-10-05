@@ -43,7 +43,7 @@ if (array_key_exists('reset', $_POST)){
     die("Check your inbox for an email that will reset your password" . 
       "Please follow the directions in your email.");
   }
-    else()
+    else
 	{
 	die("Your Email was not found");
 	}
