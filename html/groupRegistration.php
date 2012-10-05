@@ -12,7 +12,10 @@ require_once('include/conf.php');
 
 
 //Is there a user trying to register?
-if (array_key_exists('group_name', $_POST)){
+if (array_key_exists('register', $_POST)){
+
+if (array_key_exists('group_name', $_POST))
+{
 
 
     //Make sure that no one's doing anything tricksey with the groupname,
@@ -56,7 +59,7 @@ if (array_key_exists('group_name', $_POST)){
   { 
   die("Group name not set. How did you get here?");
   }
-
+}
 
 
 
