@@ -123,7 +123,7 @@ if (array_key_exists('group_id', $_POST)){
         <table title="Content" id="content" border="0">
           <tr>
             <td>Group Name: </td>
-            <td><input type="text" name="user_name"></td>
+            <td><input type="text" name="group_name"></td>
           </tr>
       
           <tr>
