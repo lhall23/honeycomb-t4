@@ -12,7 +12,7 @@ require_once('include/conf.php');
 
 
 //Is there a user trying to register?
-if (array_key_exists('register', $_POST)){
+if (array_key_exists('groupRegister', $_POST)){
 
   if (!array_key_exists('group_name', $_POST))
   {
@@ -80,7 +80,7 @@ if (array_key_exists('register', $_POST)){
 
 <HTML> 
 <HEAD>
-<TITLE>Group Register</TITLE>
+<TITLE>groupRegister</TITLE>
 </HEAD>
 <BODY>
 <link href="include/yui/2.8.2r1/build/fonts/fonts-min.css" 
