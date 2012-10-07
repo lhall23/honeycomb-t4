@@ -18,9 +18,16 @@ if(array_key_exists('password', $_POST) && array_key_exists('passwordC', $_POST)
 	{
 	$sql="UPDATE users Set password=MD5($2) , Auth_Hash=null WHERE Auth_Hash=$1;";
 	
-	$params=array($_POST['reset'],'password');
+	$params=array($_POST['reset'],$_POST['password']);
     $results=pg_query_params($conn, $sql, $params);
-	
+		if(pg_affected_rows($results)==1)
+		{
+		die("password has been reset");
+		}
+		else
+		{
+		die("Permission Denied");
+		}
 	}
 	else
 	{
