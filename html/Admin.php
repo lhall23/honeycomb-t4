@@ -110,7 +110,7 @@ if (array_key_exists('delete', $_POST)){
         <table title="FileList" id="FileList" border="0">
         <?php 
 
-        $query = "SELECT * FROM files;"; 
+        $query = "SELECT * FROM files"; 
         $params = array($_SESSION['files']);
         $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
