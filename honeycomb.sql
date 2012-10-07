@@ -21,8 +21,6 @@ CREATE TABLE users (
 COMMENT ON COLUMN users.password IS 'sha1 hash of password';
 COMMENT ON COLUMN users.auth_hash IS 
     'onetime key used for registration and lost passwords';
-COMMENT ON COLUMN users.quota IS 
-	'user quota in bytes';
 
 DROP TABLE IF EXISTS files CASCADE; 
 CREATE TABLE files (
@@ -30,8 +28,7 @@ CREATE TABLE files (
     user_id     INTEGER NOT NULL 
         REFERENCES users(user_id) ON DELETE CASCADE, 
     file_name   varchar,
-    location    varchar UNIQUE,
-	size		INTEGER NOT NULL
+    location    varchar UNIQUE
 );
 
 DROP TABLE IF EXISTS groups CASCADE;    
@@ -39,7 +36,7 @@ CREATE TABLE groups (
     group_id    SERIAL PRIMARY KEY,
     group_name  varchar UNIQUE
 );
-
+	
 DROP TABLE IF EXISTS group_files;   
 CREATE TABLE group_files (
     group_id    INTEGER NOT NULL
