@@ -52,7 +52,7 @@ if (array_key_exists('group_name', $_POST))
     header("Location: $_SERVER[PHP_SELF]?msg=$msg");
   } else{
 	  
-	header("Location: groupProfilePage.php");
+	header("Location: groupProfilePage.php?group_id=$row[group_id] ");
     die("Group created succesfully.");
   }
 }

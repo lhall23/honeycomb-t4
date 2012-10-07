@@ -85,7 +85,7 @@ if (array_key_exists('add', $_POST)){
         $params=array($_GET['group_id'],$myfile);
         $query_res=pg_execute($conn, "ins_file", $params);
 
-        if (!$query_res || pg_num_rows($query_res)!=1){
+        if (!$query_res || pg_affected_rows($query_res)!=1){
             $msg="Database error.";
             trigger_error($msg);
             die($msg);
@@ -187,7 +187,7 @@ if (array_key_exists('delete', $_POST)){
     <td width="959" bgcolor="white">
       <form enctype="multipart/form-data" 
                   action="<?php 
-echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
+echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";	
 					?>" method="POST">
         <table title="FileList" id="FileList" border="0">
         <?php 
@@ -211,7 +211,7 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         } 
 
 
-        $query = "SELECT * FROM group_files"; 
+        $query = "SELECT * FROM group_files JOIN files USING(files_id);";
         $result = pg_query($conn, $query); 
         if (!$result) { 
             $msg="Failed to get file listing.";
