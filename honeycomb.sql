@@ -34,9 +34,12 @@ CREATE TABLE files (
 DROP TABLE IF EXISTS groups CASCADE;    
 CREATE TABLE groups (
     group_id    SERIAL PRIMARY KEY,
+	owner_id		INTEGER NOT NULL
+        REFERENCES users(user_id) ON DELETE CASCADE, 
     group_name  varchar UNIQUE
 );
-	
+COMMENT ON COLUMN groups.owner_id IS 'Group creator/owner';
+
 DROP TABLE IF EXISTS group_files;   
 CREATE TABLE group_files (
     group_id    INTEGER NOT NULL

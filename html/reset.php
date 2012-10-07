@@ -20,7 +20,10 @@ if (array_key_exists('reset', $_POST)){
     die("No email provided");
   }
   $Email=strtolower($_POST['email']);
-    
+    $Email=$_POST['email'];
+	if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {//if Email is invalid kick out
+		die ("This email address is invalid.");
+	}
 
   //Get user info from database
   
