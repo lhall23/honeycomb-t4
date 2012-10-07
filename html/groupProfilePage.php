@@ -102,7 +102,7 @@ if (array_key_exists('add', $_POST)){
         }
         pg_free_result($query_res);
         
-        
+	}
     }
 	
 	
