@@ -19,7 +19,7 @@ if (array_key_exists('reset', $_POST)){
   if (!array_key_exists('email', $_POST) ){//checks to see if an email was sudmited
     die("No email provided");
   }
-
+  $Email=strtolower($_POST['email']);
     
 
   //Get user info from database
@@ -27,7 +27,7 @@ if (array_key_exists('reset', $_POST)){
   $sql="SELECT COUNT(*) FROM users WHERE email=$1;";
   
   
-  $params=array(strtolower($_POST['email']));
+  $params=array(strtolower($Email));
   $results=pg_query_params($conn, $sql, $params);//looks to see if email is in table
 	if (!$results) {
 		die("WE messed up!!!");
@@ -35,9 +35,9 @@ if (array_key_exists('reset', $_POST)){
 	else if(1==pg_num_rows($results)) {//email has been found
 		$token=md5(mt_rand());
 		$sql="UPDATE users Set auth_hash=$2 WHERE email=$1;";
-		$params=array($_POST['email'],$token);
+		$params=array($Email,$token);
 		$results=pg_query_params($conn, $sql, $params);//set the authintication hash
-		mail($_POST['email'], $MAIL_SUBJECT, $MAIL_TEXT . $token);//sends email to user with link
+		mail($Email, $MAIL_SUBJECT, $MAIL_TEXT . $token);//sends email to user with link
 		die("Check your inbox for an email that will reset your password" . 
 		"Please follow the directions in your email.");
 	}
