@@ -26,7 +26,7 @@ if (array_key_exists('login', $_POST)){
                     FROM files                                                                      
                     GROUP BY user_id                                                        
             ) AS files USING (user_id)                                                      
-            WHERE user_name='test' AND auth_hash IS NULL;";
+            WHERE user_name=$1 AND auth_hash IS NULL;";
     $params=array($UserName);
     $results=pg_query_params($conn, $sql, $params);
     assert('pg_num_rows($results) <= 1 /*uniqueness violation in database*/');
