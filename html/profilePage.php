@@ -161,6 +161,31 @@ if (array_key_exists('delete', $_POST)){
         <table title="FileList" id="FileList" border="0">
         <?php 
 
+
+
+$query = "SELECT G.group_name FROM groups G INNER JOIN group_members GM ON(G.group_id = GM.group_id) WHERE GM.user_id=$1"; 
+        $params = array($_SESSION['user_id']);
+        $result = pg_query_params($conn, $query, $params); 
+        if (!$result) { 
+            $msg="Failed to get file listing.";
+            trigger_error($msg); 
+            die($msg); 
+        } 
+
+        while($myrow = pg_fetch_assoc($result)) {
+            echo '<tr><td><input type="checkbox" ';
+            printf('value="%s" name="filelist[]"/><a href="%s/%s">%s</a>', 
+                $myrow['file_id'], $FILE_URL, $myrow['location'], 
+                $myrow['file_name']); 
+            echo '</td></tr>';
+        } 
+
+
+
+
+
+
+
         $query = "SELECT * FROM files WHERE user_id=$1"; 
         $params = array($_SESSION['user_id']);
         $result = pg_query_params($conn, $query, $params); 
