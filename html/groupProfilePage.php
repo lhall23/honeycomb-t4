@@ -10,7 +10,6 @@
     require_once('include/session.php');
     require_once('include/conf.php');
     // Where the file is going to be placed 
-    $target_path = "$FILE_STORE/$_SESSION[group_name]/";
 
 function gen_filename($seed){
     // bind some params to more readable variables and get a starting filename
@@ -97,12 +96,14 @@ if (array_key_exists('add', $_POST)){
         pg_free_result($query_res);
         
 	}
-    }
+	trigger_error("Trace: adding file to group");
+ }
 	
 	
 // Delete from the group below!!!
 
 if (array_key_exists('delete', $_POST)){
+		trigger_error("Trace: deleting file from group");
     $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
     pg_prepare("get_file", $fetch_sql);
     $delete_sql="DELETE FROM files WHERE file_id=$1";
