@@ -141,7 +141,7 @@ if (array_key_exists('verify', $_GET)){
             <td><input type="text" name="email"></td>
           </tr>
 		  <tr>
-		    <td> Do you agree to the terms and connditions?</td>
+		    <td> Do you agree to the terms and connditions as found at (URL HERE)?</td>
 			<td><input type="checkbox" name="agree" value="1"></td>
 		  
 		  </tr>
