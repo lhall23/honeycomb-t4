@@ -186,7 +186,9 @@ if (array_key_exists('delete', $_POST)){
     <img src="images/Side Bar Pics.jpg" width="216" height="864" />    </td>
     <td width="959" bgcolor="white">
       <form enctype="multipart/form-data" 
-                  action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+                  action="<?php 
+echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
+					?>" method="POST">
         <table title="FileList" id="FileList" border="0">
         <?php 
 
