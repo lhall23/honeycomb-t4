@@ -163,7 +163,8 @@ if (array_key_exists('delete', $_POST)){
 
 
 
-$query = "SELECT G.group_name FROM groups G INNER JOIN group_members GM ON(G.group_id = GM.group_id) WHERE GM.user_id=$1"; 
+$query = "SELECT group_name, group_id FROM groups INNER JOIN group_members 
+USING(group_id) WHERE user_id=$1"; 
         $params = array($_SESSION['user_id']);
         $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
@@ -174,9 +175,9 @@ $query = "SELECT G.group_name FROM groups G INNER JOIN group_members GM ON(G.gro
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/><a href="%s/%s">%s</a>', 
-                $myrow['file_id'], $FILE_URL, $myrow['location'], 
-                $myrow['file_name']); 
+            printf('value="%s" name="filelist[]"/><a href="groupRegistration.php?group_id=%s">%s</a>', 
+                $myrow['group_id'], $myrow['group_id'],
+                $myrow['group_name']); 
             echo '</td></tr>';
         } 
 
