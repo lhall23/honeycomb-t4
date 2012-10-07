@@ -216,11 +216,10 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         </table>
       </form>
       
-    <title>
+  
+	<title>
     Group Files
     </title>
-   
-	
       
       
       <form enctype="multipart/form-data" 
@@ -253,7 +252,7 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         } 
 	  
 			
-			?>">Logout</a></td>
+			?>"<a>Logout</a></td>
           </tr>
         </table>
       </td><td width="4" bgcolor="white">
