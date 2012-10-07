@@ -53,7 +53,7 @@ if (array_key_exists('delete', $_POST)){
         pg_free_result($query_res);
         
         $query_res=pg_execute($conn, "del_file", $params);
-        if (!$query_res || pg_affected_rows($query_res)) {
+        if (!$query_res || pg_affected_rows($query_res) !=1) {
             $msg="Unable to remove from $myfile from database.";
             trigger_error($msg);
             die($msg);
@@ -111,7 +111,6 @@ if (array_key_exists('delete', $_POST)){
         <?php 
 
         $query = "SELECT * FROM files;"; 
-        //$params = array($row('files'));
         $result = pg_query($conn, $query); 
         if (!$result) { 
             $msg="Failed to get file listing.";
