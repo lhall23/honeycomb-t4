@@ -211,6 +211,15 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         } 
 
 
+        ?> 
+          <tr><td><input type="submit" name='add' value="Add Files to Group" /></td></tr>
+        </table>
+      </form>
+      <form enctype="multipart/form-data" 
+          action="<?php echo "$_SERVER[PHP_SELF]";
+		  
+		  
+		  
         $query = "SELECT * FROM group_files JOIN files USING(file_id);";
         $result = pg_query($conn, $query); 
         if (!$result) { 
@@ -226,21 +235,12 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
                 $myrow['file_name']); 
             echo '</td></tr>';
         } 
-        ?> 
-          <tr><td><input type="submit" name='add' value="Add Files to Group" /></td></tr>
-        </table>
-      </form>
-      <form enctype="multipart/form-data" 
-          action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+		  
+		  
+		  
+		  ?>" method="POST">
         <table title="Content" id="content" border="0">
-          <tr>
-            <td><input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-              Choose a file to upload: </td>
-            <td><input name="uploadedfile" type="file" /></td>
-          </tr>
-          <tr>
-            <td><input type="submit" value="Upload File" /></td>
-          </tr>
+         
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
          
             <tr>
