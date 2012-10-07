@@ -77,6 +77,37 @@ if (array_key_exists('uploadedfile', $_FILES)){
     }
 }
 
+if (array_key_exists('add', $_POST)){
+    $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
+    pg_prepare("get_file", $fetch_sql);
+    $insert_sql="INSERT INTO GROUP_FILES(group_id,file_id) VALUES($_GET[group_id],$1)";
+    pg_prepare("ins_file", $insert_sql);
+
+   
+    foreach ($_POST['filelist'] as $myfile){
+        $params=array($myfile);
+        $query_res=pg_execute($conn, "get_file", $params);
+
+        if (!$query_res || pg_num_rows($query_res)!=1){
+            $msg="Can't find file with id $myfile.";
+            trigger_error($msg);
+            die($msg);
+        }
+        $row=pg_fetch_assoc($query_res);
+        $file_loc=$row['location'];
+        if (! unlink("$FILE_STORE/$file_loc")) {
+            $msg="Unable to add to group from $file_loc.";
+            trigger_error($msg);
+            die($msg);
+        }
+        pg_free_result($query_res);
+        
+        
+    }
+	
+	
+// Delete from the group below!!!
+
 if (array_key_exists('delete', $_POST)){
     $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
     pg_prepare("get_file", $fetch_sql);
@@ -113,6 +144,10 @@ if (array_key_exists('delete', $_POST)){
         }
         pg_free_result($query_res);
     }
+		
+	
+	
+	
 }
 ?>
 
@@ -195,7 +230,7 @@ if (array_key_exists('delete', $_POST)){
             echo '</td></tr>';
         } 
         ?> 
-          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
+          <tr><td><input type="submit" name='add' value="Add Files to Group" /></td></tr>
         </table>
       </form>
       <form enctype="multipart/form-data" 
@@ -209,10 +244,8 @@ if (array_key_exists('delete', $_POST)){
           <tr>
             <td><input type="submit" value="Upload File" /></td>
           </tr>
-          
-          <tr>
-          	<td><a href="<?php echo "groupRegistration.php"; ?>">Create a Group</a></td>
-           </tr>
+          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
+         
             <tr>
             <td><a href="<?php echo "login.php?logout"; ?>">Logout</a></td>
           </tr>
@@ -222,7 +255,7 @@ if (array_key_exists('delete', $_POST)){
     </td>
   </tr>
 </table>
- 
+
 <style>
   .ygtvitem {
     font-family:Verdana, Geneva, sans-serif;
