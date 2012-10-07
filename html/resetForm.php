@@ -12,7 +12,7 @@ require_once('include/conf.php');
 if (array_key_exists('verify', $_GET)){//checks if user came from email provided
 $verify=$_GET['verify'];
 }
-if(array_key_exists('password', $_POST) && array_key_exists('passwordC', $_POST)))//checks to see if form executed 
+if(array_key_exists('password', $_POST) && array_key_exists('passwordC', $_POST))//checks to see if form executed 
 	{
 	if(($_POST['password']==$_POST['passwordC'])&& $_POST['password']!='')
 	{
