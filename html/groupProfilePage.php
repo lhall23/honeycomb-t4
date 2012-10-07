@@ -179,9 +179,8 @@ if (array_key_exists('delete', $_POST)){
         } 
 
 
-        $query = "SELECT * FROM files F INNER JOIN users U ON(F.user_id = U.user_id) JOIN group_files GF ON(F.file_id = GF.file_id) JOIN groups G ON(GF.group_id = G.group_id) JOIN group_members GM ON(G.group_id = GM.group_id) WHERE F.file_id = GF.file_id AND U.user_id <> GM.user_id;"; 
-        $params = array($_SESSION['user_id']);
-        $result = pg_query_params($conn, $query, $params); 
+        $query = "SELECT * FROM group_files"; 
+        $result = pg_query($conn, $query); 
         if (!$result) { 
             $msg="Failed to get file listing.";
             trigger_error($msg); 
