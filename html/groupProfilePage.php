@@ -216,15 +216,25 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         </table>
       </form>
       
-      <form>
-       <table title="Content" id="content" border="0">
+    <title>
+    Group Files
+    </title>
+   
+	
+      
+      
+      <form enctype="multipart/form-data" 
+          action="<?php echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";?>" method="POST"> <table title="Content" id="content" border="0">
           <tr>
             <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-      <title>
-      Group Files
-      </title>
-      <?php 
-	  
+        <table title="Content" id="content" border="0">
+         
+          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
+         
+            <tr>
+            <td><a href="<?php echo "login.php?logout"; 
+			
+			 
 	  
         $query = "SELECT * FROM group_files JOIN files USING(file_id);";
         $result = pg_query($conn, $query); 
@@ -242,21 +252,8 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
             echo '</td></tr>';
         } 
 	  
-	  
-	  ?>
-      </form>
-      
-      
-      <form enctype="multipart/form-data" 
-          action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST"> <table title="Content" id="content" border="0">
-          <tr>
-            <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-        <table title="Content" id="content" border="0">
-         
-          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
-         
-            <tr>
-            <td><a href="<?php echo "login.php?logout"; ?>">Logout</a></td>
+			
+			?>">Logout</a></td>
           </tr>
         </table>
       </td><td width="4" bgcolor="white">
