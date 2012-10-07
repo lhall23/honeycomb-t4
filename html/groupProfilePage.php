@@ -78,14 +78,12 @@ if (array_key_exists('uploadedfile', $_FILES)){
 }
 
 if (array_key_exists('add', $_POST)){
-    $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
-    pg_prepare("get_file", $fetch_sql);
-    $insert_sql="INSERT INTO GROUP_FILES(group_id,file_id) VALUES($_GET[group_id],$1)";
+    $insert_sql="INSERT INTO GROUP_FILES(group_id,file_id) VALUES($1,$2)";
     pg_prepare("ins_file", $insert_sql);
 
    
     foreach ($_POST['filelist'] as $myfile){
-        $params=array($myfile);
+        $params=array($_GET['group_id'],$myfile);
         $query_res=pg_execute($conn, "get_file", $params);
 
         if (!$query_res || pg_num_rows($query_res)!=1){
@@ -95,11 +93,7 @@ if (array_key_exists('add', $_POST)){
         }
         $row=pg_fetch_assoc($query_res);
         $file_loc=$row['location'];
-        if (! unlink("$FILE_STORE/$file_loc")) {
-            $msg="Unable to add to group from $file_loc.";
-            trigger_error($msg);
-            die($msg);
-        }
+        
         pg_free_result($query_res);
         
 	}
