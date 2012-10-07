@@ -111,8 +111,8 @@ if (array_key_exists('delete', $_POST)){
         <?php 
 
         $query = "SELECT * FROM files;"; 
-        $params = array($row('files'));
-        $result = pg_query_params($conn, $query, $params); 
+        //$params = array($row('files'));
+        $result = pg_query($conn, $query); 
         if (!$result) { 
             $msg="Failed to get file listing.";
             trigger_error($msg); 
