@@ -14,19 +14,19 @@ $verify=$_GET['verify'];
 }
 if(array_key_exists('password', $_POST) && array_key_exists('passwordC', $_POST))//checks to see if form executed 
 	{
-	if(($_POST['password']==$_POST['passwordC'])&& $_POST['password']!='')
+	if(($_POST['password']==$_POST['passwordC'])&& $_POST['password']!='')//checks for blank password field and checks that both fields are the same
 	{
-	$sql="UPDATE users Set password=MD5($2) , Auth_Hash=null WHERE Auth_Hash=$1;";
-	
+	$sql="UPDATE users Set password=MD5($2) , Auth_Hash=null WHERE Auth_Hash=$1;";//check has been passed and pasword is updated and 
+																				  // Authintication hash is removed
 	$params=array($_POST['reset'],$_POST['password']);
     $results=pg_query_params($conn, $sql, $params);
-		if(pg_affected_rows($results)==1)
+		if(pg_affected_rows($results)==1)//see if the passward was changed
 		{
-		die("password has been reset");
+		die("password has been reset");//changed
 		}
 		else
 		{
-		die("Permission Denied");
+		die("Permission Denied");//authintication failed and password is the same as before
 		}
 	}
 	else

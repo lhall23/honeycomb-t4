@@ -22,7 +22,8 @@ if (array_key_exists('register', $_POST)){
       !array_key_exists('email', $_POST) ){
     die("User, password or email not set. How did you get here?");
   }
-
+  if(!$_POST['agree']=="1")
+  {die ("You must accept the terms and conditions");}
     //Make sure that no one's doing anything tricksey with the username,
     //since it gets used as a filename for the moment
     if(!ctype_alnum($_POST['user_name'])){
@@ -139,6 +140,11 @@ if (array_key_exists('verify', $_GET)){
             <td>Email: </td>
             <td><input type="text" name="email"></td>
           </tr>
+		  <tr>
+		    <td> Do you agree to the terms and connditions as found at (URL HERE)?</td>
+			<td><input type="checkbox" name="agree" value="1"></td>
+		  
+		  </tr>
           <tr>
             <td><input type="hidden" name="register"></td>
             <td><input type="submit" value="Register"></td>
