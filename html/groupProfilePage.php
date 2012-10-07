@@ -160,7 +160,7 @@ if (array_key_exists('delete', $_POST)){
         <table title="FileList" id="FileList" border="0">
         <?php 
 
-        $query = "SELECT * FROM files INNER JOIN group_files ON(file_id) JOIN groups ON(group_id) JOIN group_member ON(group_id) WHERE file_id = group_files.file_id AND user_id <> group_member.user_id"; 
+        $query = "SELECT * FROM files F INNER JOIN users U ON(F.user_id = U.user_id) JOIN group_files GF ON(F.file_id = GF.file_id) JOIN groups G ON(GF.group_id = G.group_id) JOIN group_members GM ON(G.group_id = GM.group_id) WHERE F.file_id = GF.file_id AND U.user_id <> GM.user_id;"; 
         $params = array($_SESSION['user_id']);
         $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
