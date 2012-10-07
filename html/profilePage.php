@@ -165,7 +165,7 @@ if (array_key_exists('delete', $_POST)){
 
 $query = "SELECT group_name, group_id FROM groups INNER JOIN group_members 
 USING(group_id) WHERE user_id=$1"; 
-        $params = array($_SESSION['group_id']);
+        $params = array($_SESSION['user_id']);
         $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
             $msg="Failed to get file listing.";
