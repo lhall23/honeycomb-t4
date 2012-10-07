@@ -9,27 +9,26 @@
 
 require_once('include/conf.php');
 //Is someone trying to get their account verified?
-if (array_key_exists('verify', $_GET)){
-	if (!array_key_exists('password', $_POST) || 
-			!array_key_exists('passwordC', $_POST))
-		{die("how did i get here");}
-	if($_POST['password']==$_POST['passwordC'])
+if (array_key_exists('verify', $_GET)){//checks if user came from email provided
+$verify=$_GET['verify'];
+}
+if(array_key_exists('password', $_POST) && array_key_exists('passwordC', $_POST)))//checks to see if form executed 
+	{
+	if(($_POST['password']==$_POST['passwordC'])&& $_POST['password']!='')
 	{
 	$sql="UPDATE users Set password=MD5($2) , Auth_Hash=null WHERE Auth_Hash=$1;";
 	
-	$params=array($_GET['verfy'],'password');
+	$params=array($_POST['reset'],'password');
     $results=pg_query_params($conn, $sql, $params);
 	
 	}
-		else
-		{
+	else
+	{
 		die("Invlid or nonmatching password");
 		}
 
-}
-else
-{die("SQL error?");
-}
+	}
+
 
 ?>
 
@@ -85,7 +84,7 @@ else
             <td><input type="password" name="passwordC"></td>
           </tr>
           <tr>
-            <td><input type="hidden" name="reset"></td>
+            <td><input type="hidden" name="reset" value="<?php echo $verify;?>"></td>
             <td><input type="submit" value="Reset"></td>
           </tr>
           <tr>
