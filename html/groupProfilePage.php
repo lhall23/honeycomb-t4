@@ -83,10 +83,10 @@ if (array_key_exists('add', $_POST)){
    
     foreach ($_POST['filelist'] as $myfile){
         $params=array($_GET['group_id'],$myfile);
-        $query_res=pg_execute($conn, "get_file", $params);
+        $query_res=pg_execute($conn, "ins_file", $params);
 
         if (!$query_res || pg_num_rows($query_res)!=1){
-            $msg="Can't find file with id $myfile.";
+            $msg="Database error.";
             trigger_error($msg);
             die($msg);
         }
