@@ -27,7 +27,7 @@ if (array_key_exists('reset', $_POST)){
   $sql="SELECT COUNT(*) FROM users WHERE email=$1;";
   
   
-  $params=array(strtolower($Email);
+  $params=array(strtolower($Email));
   $results=pg_query_params($conn, $sql, $params);//looks to see if email is in table
 	if (!$results) {
 		die("WE messed up!!!");
