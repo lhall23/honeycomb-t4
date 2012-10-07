@@ -211,7 +211,7 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         } 
 
 
-        $query = "SELECT * FROM group_files JOIN files USING(files_id);";
+        $query = "SELECT * FROM group_files JOIN files USING(file_id);";
         $result = pg_query($conn, $query); 
         if (!$result) { 
             $msg="Failed to get file listing.";
