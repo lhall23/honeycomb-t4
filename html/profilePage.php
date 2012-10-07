@@ -175,7 +175,7 @@ USING(group_id) WHERE user_id=$1";
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/><a href="groupRegistration.php?group_id=%s">%s</a>', 
+            printf('value="%s" name="filelist[]"/><a href="groupProfilePage.php?group_id=%s">%s</a>', 
                 $myrow['group_id'], $myrow['group_id'],
                 $myrow['group_name']); 
             echo '</td></tr>';
