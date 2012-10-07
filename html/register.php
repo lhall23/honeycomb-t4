@@ -31,7 +31,7 @@ if (array_key_exists('register', $_POST)){
 		die ("This email address is invalid.");
 	}
 	list($notuse,$domain)=split('@',$Email);//checks the domain of the email adress
-	if(strtolower(list[1])!='spsu.edu')//does this regardless of case
+	if(strtolower(list(1))!='spsu.edu')//does this regardless of case
 	{
 	die(" Please enter a SPSU email adress!");
 	}
