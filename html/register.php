@@ -2,7 +2,7 @@
 /* 
  * register.php
  * -Lee Hall Sat 08 Sep 2012 06:05:55 PM EDT
- *
+ * Edits by Matthew Powell
  * Allow the user to create a new account, and verify that account
  *
  */
@@ -22,8 +22,20 @@ if (array_key_exists('register', $_POST)){
       !array_key_exists('email', $_POST) ){
     die("User, password or email not set. How did you get here?");
   }
-  if(!$_POST['agree']=="1")
+  
+  if(!$_POST['agree']=="1")//checks to see if accepted the terms and conditions
   {die ("You must accept the terms and conditions");}
+  
+  $Email=$_POST['email'];
+	if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {//if Email is invalid kick out
+		die "This email address is invalid.";
+	}
+	list($notuse,$domain)=split('@',$Email);//checks the domain of the email adress
+	if(strtolower(list[1])!='spsu.edu')//does this regardless of case
+	{
+	die(" Please enter a SPSU email adress!");
+	}
+  
     //Make sure that no one's doing anything tricksey with the username,
     //since it gets used as a filename for the moment
     if(!ctype_alnum($_POST['user_name'])){
