@@ -217,6 +217,9 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
       </form>
       
       <form>
+       <table title="Content" id="content" border="0">
+          <tr>
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
       <title>
       Group Files
       </title>
@@ -245,7 +248,9 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
       
       
       <form enctype="multipart/form-data" 
-          action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
+          action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST"> <table title="Content" id="content" border="0">
+          <tr>
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
         <table title="Content" id="content" border="0">
          
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
