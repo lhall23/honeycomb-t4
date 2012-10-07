@@ -2,7 +2,7 @@
 /* 
  * login.php
  * -Lee Hall Thu 06 Sep 2012 10:23:45 PM EDT
- *
+ * edits by Matthew Powell
  * Allow the user to login
  */
 require_once('include/conf.php');
@@ -14,12 +14,12 @@ if (array_key_exists('login', $_POST)){
             !array_key_exists('password', $_POST) ){
         die("User or password not set. How did you get here?");
     }
-
+	$UserName=strtolower($_POST['user_name']);
     // Get user info from database. Only retrieve users who have authenticated
     // their accounts.
     $sql="SELECT user_id,password,quota FROM users 
         WHERE user_name=$1 AND auth_hash IS NULL;";
-    $params=array($_POST['user_name']);
+    $params=array($UserName);
     $results=pg_query_params($conn, $sql, $params);
     assert('pg_num_rows($results) <= 1 /*uniqueness violation in database*/');
 
@@ -33,7 +33,7 @@ if (array_key_exists('login', $_POST)){
     //Does the password match?
     if (md5($_POST['password']) == $row['password']){
         session_start();
-        $_SESSION['user_name']=$_POST['user_name'];
+        $_SESSION['user_name']=$UserName;
         $_SESSION['user_id']=$row['user_id'];
         $_SESSION['user_quota']=$row['quota'];
         $_SESSION['user_dir_fs']=$FILE_STORE . $row['user_id'];
