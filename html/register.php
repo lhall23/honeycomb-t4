@@ -28,7 +28,7 @@ if (array_key_exists('register', $_POST)){
   
   $Email=$_POST['email'];
 	if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {//if Email is invalid kick out
-		die "This email address is invalid.";
+		die ("This email address is invalid.");
 	}
 	list($notuse,$domain)=split('@',$Email);//checks the domain of the email adress
 	if(strtolower(list[1])!='spsu.edu')//does this regardless of case
