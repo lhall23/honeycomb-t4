@@ -8,13 +8,13 @@
 require_once("include/conf.php");
 require_once("include/session.php");
 
-if (!array_key_exists($_GET, 'file_id'){
+if (!array_key_exists('file_id', $_GET)){
     die("No file specified");
 }
 
-$sql="SELECT DISTINCT file_id,location
+$sql="SELECT DISTINCT file_id,location,file_name
         FROM files 
-        JOIN group_files USING (file_id) 
+        LEFT JOIN group_files USING (file_id) 
         WHERE file_id=$1 AND 
             (files.user_id=$2 OR
             group_id IN 
@@ -32,7 +32,7 @@ if (pg_num_rows($file_res)== 0) {
         " or you do not have permission to access it.");
 }
 $row=pg_fetch_array($file_res);
-$file=$row['location'];
+$file="$FILE_STORE/$row[location]";
 $file_name=$row['file_name'];
        
 //File sending adapted from PHP example at 
@@ -47,6 +47,9 @@ if (file_exists($file)) {
     flush();
     readfile($file);
     exit;
+} else {
+	trigger_error("File $row[file_id] in database but not on disk.");
+	die("Unable to locate file on disk.");
 }
 
 ?>
