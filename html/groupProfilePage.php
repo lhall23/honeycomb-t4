@@ -204,9 +204,9 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/><a href="%s/%s">%s</a>', 
-                $myrow['file_id'], $FILE_URL, $myrow['location'], 
-                $myrow['file_name']); 
+            printf('value="%s" name="filelist[]"/>' .
+					'<a href="getFile.php?file_id=%s">%s</a>', 
+                $myrow['file_id'], $myrow['file_id'], $myrow['file_name']); 
             echo '</td></tr>';
         } 
 
@@ -245,9 +245,9 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/><a href="%s/%s">%s</a>', 
-                $myrow['file_id'], $FILE_URL, $myrow['location'], 
-                $myrow['file_name']); 
+            printf('value="%s" name="filelist[]"/>' .
+					'<a href="getFile.php?file_id=%s">%s</a>', 
+                $myrow['file_id'], $myrow['file_id'], $myrow['file_name']); 
             echo '</td></tr>';
         } 
 	  

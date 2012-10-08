@@ -165,9 +165,9 @@ USING(group_id) WHERE user_id=$1";
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/><a href="groupProfilePage.php?group_id=%s">%s</a>', 
-                $myrow['group_id'], $myrow['group_id'],
-                $myrow['group_name']); 
+            printf('value="%s" name="filelist[]"/>' . '
+					<a href="groupProfilePage.php?group_id=%s">%s</a>', 
+                $myrow['group_id'], $myrow['group_id'], $myrow['group_name']); 
             echo '</td></tr>';
         } 
 
@@ -188,9 +188,9 @@ USING(group_id) WHERE user_id=$1";
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/><a href="%s/%s">%s</a>', 
-                $myrow['file_id'], $FILE_URL, $myrow['location'], 
-                $myrow['file_name']); 
+            printf('value="%s" name="filelist[]"/>' . 
+					'<a href="getFile.php?file_id=%s">%s</a>', 
+                $myrow['file_id'], $myrow['file_id'], $myrow['file_name']); 
             echo '</td></tr>';
         } 
         ?> 
