@@ -48,10 +48,10 @@ if (array_key_exists('register', $_POST)){
 
   //Get user info from database
   $token=md5(mt_rand() . $_POST['user_name']);
-  $sql="INSERT INTO users(user_name,password,email,auth_hash) VALUES 
-    ($1, $2, $3, $4);";
+  $sql="INSERT INTO users(user_name,password,email,auth_hash,quota) VALUES 
+    ($1, $2, $3, $4, $5);";
   $params=array($_POST['user_name'], md5($_POST['password']), 
-    strtolower($_POST['email']), $token);
+    strtolower($_POST['email']), $token, 10 * 1024 * 1024);
   $results=pg_query_params($conn, $sql, $params);
   if (!$results || pg_affected_rows($results) != 1) {
     //There has to be a more elegant way to do this.
