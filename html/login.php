@@ -20,7 +20,7 @@ if (array_key_exists('login', $_POST)){
     // If this gets slow, we can pull the quota after getting user_id so we
     // don't have to scan the whole files table, but this works for now
     $sql="SELECT user_id,password,enabled,
-				COALESCE(quota - files.space, 0) AS free_space
+				COALESCE(quota - files.space, quota) AS free_space
             FROM users                                                                      
             LEFT JOIN (                                                                              
                 SELECT user_id,SUM(size) AS space                                                   

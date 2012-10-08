@@ -28,7 +28,7 @@ if (array_key_exists('uploadedfile', $_FILES)){
     //Check if we're going to go over the quota
     $file_size=$_FILES['uploadedfile']['size'];
     if ($_SESSION['user_free_space'] < $file_size){
-        $msg="This would exceed your quota of $_SESSION[user_quota] bytes.";
+        $msg="This would exceed your quota.";
         header("Location: $_SERVER[PHP_SELF]?msg=$msg");
         die($msg);
     }
@@ -107,8 +107,8 @@ if (array_key_exists('delete', $_POST)){
 ?>
 
 <?php
-    print "Welcome $_SESSION[user_name]<br>";
-	print "You have $_SESSION[user_free_space] bytes available";
+    print "Welcome $_SESSION[user_name].<br>";
+	print "You have $_SESSION[user_free_space] bytes available.<br>";
     if (array_key_exists("msg", $_GET)){
         // Does this actually sanitixe enough, or can we still end up with XSS
         // attacks here?
