@@ -19,7 +19,7 @@ if (array_key_exists('login', $_POST)){
     // their accounts.
     // If this gets slow, we can pull the quota after getting user_id so we
     // don't have to scan the whole files table, but this works for now
-    $sql="SELECT user_id,password,
+    $sql="SELECT user_id,password,enabled,
 				COALESCE(quota - files.space, 0) AS free_space
             FROM users                                                                      
             LEFT JOIN (                                                                              
@@ -27,7 +27,7 @@ if (array_key_exists('login', $_POST)){
                     FROM files                                                                      
                     GROUP BY user_id                                                        
             ) AS files USING (user_id)                                                      
-            WHERE user_name=$1 AND auth_hash IS NULL;";
+            WHERE user_name=$1;";
     $params=array($UserName);
     $results=pg_query_params($conn, $sql, $params);
     assert('pg_num_rows($results) <= 1 /*uniqueness violation in database*/');
@@ -38,6 +38,10 @@ if (array_key_exists('login', $_POST)){
         header("Location: $_SERVER[PHP_SELF]?msg=Unknown User");
         die("User not found.");
     }
+	if (! $row['enabled']) {
+        header("Location: $_SERVER[PHP_SELF]?msg=Please verify your account");
+        die("Unverified account.");
+	}
 
     //Does the password match?
     if (md5($_POST['password']) == $row['password']){

@@ -15,12 +15,14 @@ CREATE TABLE users (
     email       varchar UNIQUE NOT NULL,
     first_name  varchar,
     last_name   varchar,
+	enabled		boolean DEFAULT false,
     quota       integer DEFAULT 0
 );      
 
 COMMENT ON COLUMN users.password IS 'sha1 hash of password';
 COMMENT ON COLUMN users.auth_hash IS 
     'onetime key used for registration and lost passwords';
+COMMENT ON COLUMN users.enabled IS 'Has user been verified?';
 
 DROP TABLE IF EXISTS files CASCADE; 
 CREATE TABLE files (

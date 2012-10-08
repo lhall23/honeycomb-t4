@@ -33,14 +33,16 @@ if (array_key_exists('register', $_POST)){
 	list($notuse,$domain)=split('@',$Email);//checks the domain of the email adress
 	if(strtolower($domain)!='spsu.edu')//does this regardless of case
 	{
-	die(" Please enter a SPSU email adress!");
+	die(" Please enter an SPSU email adress!");
 	}
   
     //Make sure that no one's doing anything tricksey with the username,
-    //since it gets used as a filename for the moment
+    //since it gets used as a filename for the moment. 
+	// While that danger no longer exists, it's probably good to enforce sanity
+	// here.  --Mon Oct  8 13:18:00 EDT 2012
     if(!ctype_alnum($_POST['user_name'])){
         $msg="Please only use letters and numbers in the username.";
-    header("Location: $_SERVER[PHP_SELF]?msg=$msg");
+		header("Location: $_SERVER[PHP_SELF]?msg=$msg");
         die("Illegal characters in username.");
     }
 
@@ -86,7 +88,7 @@ if (array_key_exists('verify', $_GET)){
   $_SESSION['user_id']=$row['user_id'];
   $_SESSION['user_name']=$row['user_name'];
 
-  $sql="UPDATE users SET auth_hash=NULL WHERE user_id=$1;";
+  $sql="UPDATE users SET auth_hash=NULL, enabled=true WHERE user_id=$1;";
   $params=array($row['user_id']);
   $results=pg_query_params($conn, $sql, $params);
   if (!$results || pg_affected_rows($results) != 1){
