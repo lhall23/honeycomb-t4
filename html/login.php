@@ -19,9 +19,10 @@ if (array_key_exists('login', $_POST)){
     // their accounts.
     // If this gets slow, we can pull the quota after getting user_id so we
     // don't have to scan the whole files table, but this works for now
-    $sql="SELECT user_id,password,quota - files.space AS free_space
+    $sql="SELECT user_id,password,
+				COALESCE(quota - files.space, 0) AS free_space
             FROM users                                                                      
-            JOIN (                                                                              
+            LEFT JOIN (                                                                              
                 SELECT user_id,SUM(size) AS space                                                   
                     FROM files                                                                      
                     GROUP BY user_id                                                        
@@ -44,8 +45,6 @@ if (array_key_exists('login', $_POST)){
         $_SESSION['user_name']=$UserName;
         $_SESSION['user_id']=$row['user_id'];
         $_SESSION['user_free_space']=$row['free_space'];
-        $_SESSION['user_dir_fs']=$FILE_STORE . $row['user_id'];
-        $_SESSION['user_dir_url']=$FILE_URL . $row['user_id'];
         if($_SESSION['user_name'] == "admin")
 		{
 			header("Location: Admin.php");

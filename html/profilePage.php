@@ -108,6 +108,7 @@ if (array_key_exists('delete', $_POST)){
 
 <?php
     print "Welcome $_SESSION[user_name]<br>";
+	print "You have $_SESSION[user_free_space] bytes available";
     if (array_key_exists("msg", $_GET)){
         // Does this actually sanitixe enough, or can we still end up with XSS
         // attacks here?
