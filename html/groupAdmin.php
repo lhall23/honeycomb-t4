@@ -3,7 +3,7 @@
 ?>
 <HTML>
 <HEAD>
-    <TITLE>Group Profile</TITLE>
+    <TITLE>Group Admin</TITLE>
 </HEAD>
 <BODY>
 <?php
@@ -77,11 +77,11 @@ if (array_key_exists('uploadedfile', $_FILES)){
 }
 
 if (array_key_exists('add', $_POST)){
-    $insert_sql="INSERT INTO GROUP_FILES(group_id,file_id) VALUES($1,$2)";
+    $insert_sql="INSERT INTO GROUP_MEMBERS(group_id,user_id) VALUES($1,$2)";
     pg_prepare("ins_file", $insert_sql);
 
    
-    foreach ($_POST['filelist'] as $myfile){
+    foreach ($_POST['userlist'] as $myfile){
         $params=array($_GET['group_id'],$myfile);
         $query_res=pg_execute($conn, "ins_file", $params);
 
@@ -103,11 +103,11 @@ if (array_key_exists('add', $_POST)){
 // Delete from the group below!!!
 
 if (array_key_exists('delete', $_POST)){
-    $delete_sql="DELETE FROM group_files WHERE group_id = $1 and file_id = $2";
+    $delete_sql="DELETE FROM group_members WHERE group_id = $1 and user_id = $2";
     pg_prepare("del_file", $delete_sql);
 
    
-    foreach ($_POST['filelist'] as $myfile){
+    foreach ($_POST['userlist'] as $myfile){
         $params=array($_GET['group_id'],$myfile);
         $query_res=pg_execute($conn, "del_file", $params);
 
@@ -122,7 +122,7 @@ if (array_key_exists('delete', $_POST)){
         pg_free_result($query_res);
         
 	}
-	trigger_error("Trace: removing file to group");
+	trigger_error("Trace: removing member from group");
  }
 ?>
 
@@ -173,26 +173,24 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         <?php 
 
 
- $query = "SELECT * FROM files WHERE user_id=$1"; 
-        $params = array($_SESSION['user_id']);
-        $result = pg_query_params($conn, $query, $params); 
+ $query = "SELECT * FROM users"; 
+        $result = pg_query($conn, $query); 
         if (!$result) { 
-            $msg="Failed to get file listing.";
+            $msg="Failed to list users.";
             trigger_error($msg); 
             die($msg); 
         } 
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/>' .
-					'<a href="getFile.php?file_id=%s">%s</a>', 
-                $myrow['file_id'], $myrow['file_id'], $myrow['file_name']); 
+            printf('value="%s" name="userlist[]"/> %s', 
+                $myrow['user_id'], $myrow['user_name']); 
             echo '</td></tr>';
         } 
 
 
         ?> 
-          <tr><td><input type="submit" name='add' value="Add Files to Group" /></td></tr>
+          <tr><td><input type="submit" name='add' value="Add Members to Group" /></td></tr>
         </table>
       </form>
       
@@ -214,29 +212,25 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
 			<?php
 			 
 	  
-        $query = "SELECT * FROM group_files JOIN files USING(file_id) WHERE group_id = $1;";
+        $query = "SELECT * FROM group_members JOIN users USING(user_id) WHERE group_id = $1;";
 		$params = array($_GET['group_id']);
         $result = pg_query_params($conn, $query,$params); 
         if (!$result) { 
-            $msg="Failed to get file listing.";
+            $msg="Failed to get users in group.";
             trigger_error($msg); 
             die($msg); 
         } 
 
         while($myrow = pg_fetch_assoc($result)) {
             echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/>' .
-					'<a href="getFile.php?file_id=%s">%s</a>', 
-                $myrow['file_id'], $myrow['file_id'], $myrow['file_name']); 
+            printf('value="%s" name="userlist[]"/> %s', 
+                $myrow['user_id'], $myrow['user_name']); 
             echo '</td></tr>';
         } 
 	  
 			
 			?>"
          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
-         <tr>
-            <td><a href= "groupAdmin.php?group_id=<?php echo $_GET['group_id']?>">Group Admin</a></td>
-          </tr>
           <tr>
             <td><a href= "login.php?logout"> Logout</a></td>
           </tr>
