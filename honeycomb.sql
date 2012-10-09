@@ -62,11 +62,11 @@ CREATE TABLE group_members (
 );
 COMMENT ON TABLE group_members IS 'join table for users and groups';
 
-INSERT INTO USERS(user_name,password,email) 
-    VALUES ('test', md5('test'), 'test@test.com');
+INSERT INTO USERS(user_name,password,email,enabled,quota) 
+    VALUES ('test', md5('test'), 'test@test.com',true,10*1024*1024);
 
-INSERT INTO USERS(user_name,password,email) 
-    VALUES ('admin', md5('admin') , 'admin@test.com');
+INSERT INTO USERS(user_name,password,email,enabled,quota) 
+    VALUES ('admin', md5('admin') , 'admin@test.com',true,10*1024*1024);
 COMMIT;
 
 
