@@ -215,7 +215,7 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
 			
 			 
 	  
-        $query = "SELECT * FROM group_files JOIN files USING(file_id) WHRER group_id = $1;";
+        $query = "SELECT * FROM group_files JOIN files USING(file_id) WHERE group_id = $1;";
 		$params = array($_GET['group_id']);
         $result = pg_query_params($conn, $query,$params); 
         if (!$result) { 
