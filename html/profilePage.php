@@ -71,7 +71,7 @@ if (array_key_exists('uploadedfile', $_FILES)){
 }
 
 if (array_key_exists('delete', $_POST)){
-    $fetch_sql="SELECT user_id,file_name,location 
+    $fetch_sql="SELECT user_id,file_name,location,size 
                     FROM files WHERE file_id=$1";
     pg_prepare("get_file", $fetch_sql);
     $delete_sql="DELETE FROM files WHERE file_id=$1";
@@ -97,6 +97,7 @@ if (array_key_exists('delete', $_POST)){
             die($msg);
         }
         $file_loc=$row['location'];
+        $file_size=$row['size'];
         if (! unlink("$FILE_STORE/$file_loc")) {
             $msg="Unable to delete from $file_loc.";
             trigger_error($msg);
@@ -105,12 +106,13 @@ if (array_key_exists('delete', $_POST)){
         pg_free_result($query_res);
         
         $query_res=pg_execute($conn, "del_file", $params);
-        if (!$query_res || pg_affected_rows($query_res)) {
+        if (!$query_res || pg_affected_rows($query_res) != 1) {
             $msg="Unable to remove $myfile from from database.";
             trigger_error($msg);
             die($msg);
         }
         pg_free_result($query_res);
+		$_SESSION['user_free_space'] += $file_size;
     }
 }
 ?>
