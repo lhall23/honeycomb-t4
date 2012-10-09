@@ -103,47 +103,27 @@ if (array_key_exists('add', $_POST)){
 // Delete from the group below!!!
 
 if (array_key_exists('delete', $_POST)){
-		trigger_error("Trace: deleting file from group");
-    $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
-    pg_prepare("get_file", $fetch_sql);
-    $delete_sql="DELETE FROM files WHERE file_id=$1";
+    $delete_sql="DELETE FROM group_files WHERE group_id = $1 and file_id = $2";
     pg_prepare("del_file", $delete_sql);
 
-    // This would be problematic for bulk deletes, since we're iterating over
-    // what could be one query, but as the user has to independently select 
-    // each file to delete, it doesn't seem like sanitizing the array input is
-    // worth the time it would take.
+   
     foreach ($_POST['filelist'] as $myfile){
-        $params=array($myfile);
-        $query_res=pg_execute($conn, "get_file", $params);
+        $params=array($_GET['group_id'],$myfile);
+        $query_res=pg_execute($conn, "del_file", $params);
 
-        if (!$query_res || pg_num_rows($query_res)!=1){
-            $msg="Can't find file with id $myfile.";
+        if (!$query_res || pg_affected_rows($query_res)!=1){
+            $msg="Database error.";
             trigger_error($msg);
             die($msg);
         }
         $row=pg_fetch_assoc($query_res);
         $file_loc=$row['location'];
-        if (! unlink("$FILE_STORE/$file_loc")) {
-            $msg="Unable to delete from $file_loc.";
-            trigger_error($msg);
-            die($msg);
-        }
+        
         pg_free_result($query_res);
         
-        $query_res=pg_execute($conn, "del_file", $params);
-        if (!$query_res || pg_affected_rows($query_res)) {
-            $msg="Unable to remove $myfile from from database.";
-            trigger_error($msg);
-            die($msg);
-        }
-        pg_free_result($query_res);
-    }
-		
-	
-	
-	
-}
+	}
+	trigger_error("Trace: removing file to group");
+ }
 ?>
 
 <?php
@@ -235,8 +215,9 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
 			
 			 
 	  
-        $query = "SELECT * FROM group_files JOIN files USING(file_id);";
-        $result = pg_query($conn, $query); 
+        $query = "SELECT * FROM group_files JOIN files USING(file_id) WHRER group_id = $1;";
+		$params = array($_GET['group_id']);
+        $result = pg_query_params($conn, $query,$params); 
         if (!$result) { 
             $msg="Failed to get file listing.";
             trigger_error($msg); 
