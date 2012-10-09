@@ -71,7 +71,8 @@ if (array_key_exists('uploadedfile', $_FILES)){
 }
 
 if (array_key_exists('delete', $_POST)){
-    $fetch_sql="SELECT file_name,location FROM files WHERE file_id=$1";
+    $fetch_sql="SELECT user_id,file_name,location 
+                    FROM files WHERE file_id=$1";
     pg_prepare("get_file", $fetch_sql);
     $delete_sql="DELETE FROM files WHERE file_id=$1";
     pg_prepare("del_file", $delete_sql);
@@ -90,6 +91,11 @@ if (array_key_exists('delete', $_POST)){
             die($msg);
         }
         $row=pg_fetch_assoc($query_res);
+        if ($row['user_id'] != $_SESSION['user_id']){
+            $msg="$_SESSION[user_name] doesn't own file with id $myfile.";
+            trigger_error($msg);
+            die($msg);
+        }
         $file_loc=$row['location'];
         if (! unlink("$FILE_STORE/$file_loc")) {
             $msg="Unable to delete from $file_loc.";
