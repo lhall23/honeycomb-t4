@@ -5,6 +5,7 @@
  * edits by Matthew Powell
  * Allow the user to login
  */
+require_once('include/secure.php');
 require_once('include/conf.php');
 
 //Is there a user trying to log in?

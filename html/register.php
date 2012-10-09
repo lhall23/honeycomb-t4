@@ -8,6 +8,7 @@
  */
 // Yes, this makes a connection when we don't neccesarily need it. It's better
 // than repeating the include inside multiple branches, though
+require_once('include/secure.php');
 require_once('include/conf.php');
 
 $MAIL_SUBJECT="[Honeycomb] Registration";

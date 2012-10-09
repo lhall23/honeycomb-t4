@@ -7,6 +7,7 @@
  *
  */
 
+require_once('include/secure.php');
 require_once('include/conf.php');
 //Is someone trying to get their account verified?
 if (array_key_exists('verify', $_GET)){//checks if user came from email provided
