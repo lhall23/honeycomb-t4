@@ -211,8 +211,8 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
           <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
          
             <tr>
-            <td><a href="<?php echo "login.php?logout"; 
-			
+            <td><a href= "login.php?logout"> <a>Logout</a></td></tr>
+			<?php
 			 
 	  
         $query = "SELECT * FROM group_files JOIN files USING(file_id) WHERE group_id = $1;";
@@ -233,8 +233,8 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         } 
 	  
 			
-			?>"<a>Logout</a></td>
-          </tr>
+			?>"
+         
         </table>
       </td><td width="4" bgcolor="white">
       </form>
