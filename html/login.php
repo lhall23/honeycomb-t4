@@ -31,7 +31,7 @@ if (array_key_exists('login', $_POST)){
             WHERE user_name=$1;";
     $params=array($UserName);
     $results=pg_query_params($conn, $sql, $params);
-    if (!$results || pg_num_rows($results) <= 1){
+    if (!$results || pg_num_rows($results) > 1){
         $msg="Unrecoverable database error.";
         trigger_error($msg);
         die($msg);
