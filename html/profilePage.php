@@ -65,6 +65,9 @@ if (array_key_exists('uploadedfile', $_FILES)){
         header("Location: $_SERVER[PHP_SELF]?msg=Error uploading file.");
         die($msg);
     }
+
+    //File has been uploaded successfully. Update the quota.
+    $_SESSION['user_free_space'] -= $file_size;
 }
 
 if (array_key_exists('delete', $_POST)){
