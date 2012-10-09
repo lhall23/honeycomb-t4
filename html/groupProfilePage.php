@@ -208,10 +208,9 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
             <td><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
         <table title="Content" id="content" border="0">
          
-          <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
          
-            <tr>
-            <td><a href= "login.php?logout"> <a>Logout</a></td></tr>
+         
+           
 			<?php
 			 
 	  
@@ -234,6 +233,11 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
 	  
 			
 			?>"
+         <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
+          <tr>
+            <td><a href= "login.php?logout"> Logout</a></td>
+          </tr>
+           
          
         </table>
       </td><td width="4" bgcolor="white">
