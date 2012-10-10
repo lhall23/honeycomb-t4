@@ -11,72 +11,25 @@
     require_once('include/conf.php');
     // Where the file is going to be placed 
 
-function gen_filename($seed){
-    // bind some params to more readable variables and get a starting filename
-    $cur_date=date("r");
-    $target_name=sha1($seed . $cur_date . mt_rand());
-    $target_name=substr($target_name,0,1) . "/$target_name";
-    return $target_name;
+
+if (!array_key_exists('group_id', $_GET)){
+    die("Please supply a group id.");
 }
 
-if (array_key_exists('uploadedfile', $_FILES)){
-
-    $check_quota_sql="SELECT SUM(size) FROM files WHERE user_id=$1;";
-    $store_file_sql="INSERT INTO files(user_id,file_name,location,size)" .
-        "VALUES ($1, $2, $3, $4);";
-
-    // Check the current amount of space in use. This aggregate must always
-    // return exactly 1 row, unless there is a database or schema failure. 
-    $params=array($_SESSION['user_id']);
-    $disk_usage_res=pg_query_params($check_quota_sql, $params);
-    assert('$disk_usage_res /*Unknown database error*/');
-    $disk_usage_row=pg_fetch_array($disk_usage_res);
-	$disk_usage = $disk_usage_row[0];
-    pg_free_result($disk_usage_res);
-
-    //Check if we're going to go over the quota
-    $file_size=$_FILES['uploadedfile']['size'];
-    if ($disk_usage + $file_size > $_SESSION['user_quota']){
-        $msg="This would exceed your quota of $_SESSION[user_quota] bytes.";
-        header("Location: $_SERVER[PHP_SELF]?msg=$msg");
-        die($msg);
-    }
-
-    // Generate a filename. Try until we get one that's not in use. The
-    // likelyhood that this fails to terminate is miniscule.
-    // A race condition is possible, but even more unlikely than collisions,
-    // and as the user does not control all of the input data to the hash,
-    // manufactured ones should be practically impossible.
-
-    $src_file_name=basename($_FILES['uploadedfile']['name']);
-    $target_file_name=gen_filename($src_file_name);
-    while(file_exists("$FILE_STORE/$target_file_name")){
-        $file_name=gen_filename($target_file_name);
-    }
-
-    if(!move_uploaded_file($_FILES['uploadedfile']['tmp_name'], 
-            "$FILE_STORE/$target_file_name")) {
-        $msg="Failed to save $src_file_name as $FILE_STORE/$target_file_name";
-        trigger_error($msg);
-        header("Location: $_SERVER[PHP_SELF]?msg=Error uploading file.");
-        die($msg);
-    }
-
-    $params=array($_SESSION['user_id'], $src_file_name, $target_file_name,
-        $file_size); 
-    $file_res=pg_query_params($conn, $store_file_sql, $params);
-    if (!$file_res || pg_affected_rows($file_res) != 1){
-        $msg="Failed to insert file into database. Deleting file.";
-        // Nuke the file, since we can't track it. No need to check returns --
-        // if this fails, there's not anything we can do about it.
-        unlink("$FILE_STORE/$file_name");
-        trigger_error($msg);
-        header("Location: $_SERVER[PHP_SELF]?msg=Error uploading file.");
-        die($msg);
-    }
+$get_group_sql="SELECT group_name,owner_id FROM groups WHERE group_id=$1;";
+$params=array($_GET['group_id']);
+$group_res=pg_query_params($conn,$get_group_sql,$params);
+if (!$group_res || pg_num_rows($group_res) > 1){
+    die("Unrecoverable database error.");
 }
 
-if (array_key_exists('add', $_POST)){
+$row=pg_fetch_array($group_res);
+if (!$row || $row['owner_id'] != $_SESSION['user_id']){
+    die("This group does not exist, " . 
+        "or you do not have permission to administer it.");
+}
+
+if (array_key_exists('add', $_POST) && array_key_exists('userlist', $_POST)){
     $insert_sql="INSERT INTO GROUP_MEMBERS(group_id,user_id) VALUES($1,$2)";
     pg_prepare("ins_file", $insert_sql);
 
@@ -96,19 +49,19 @@ if (array_key_exists('add', $_POST)){
         pg_free_result($query_res);
         
 	}
-	trigger_error("Trace: adding file to group");
  }
 	
 	
 // Delete from the group below!!!
 
-if (array_key_exists('delete', $_POST)){
+if (array_key_exists('delete', $_POST) && 
+        array_key_exists('userlist', $_POST)){
     $delete_sql="DELETE FROM group_members WHERE group_id = $1 and user_id = $2";
     pg_prepare("del_file", $delete_sql);
 
    
-    foreach ($_POST['userlist'] as $myfile){
-        $params=array($_GET['group_id'],$myfile);
+    foreach ($_POST['userlist'] as $myuser){
+        $params=array($_GET['group_id'],$myuser);
         $query_res=pg_execute($conn, "del_file", $params);
 
         if (!$query_res || pg_affected_rows($query_res)!=1){
@@ -122,7 +75,6 @@ if (array_key_exists('delete', $_POST)){
         pg_free_result($query_res);
         
 	}
-	trigger_error("Trace: removing member from group");
  }
 ?>
 
@@ -173,8 +125,11 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         <?php 
 
 
- $query = "SELECT * FROM users"; 
-        $result = pg_query($conn, $query); 
+ $query = "SELECT * FROM users 
+            LEFT JOIN group_members USING(user_id) 
+            WHERE group_id != $1 OR group_id IS NULL"; 
+ $params=array($_GET['group_id']);
+        $result = pg_query_params($conn, $query, $params); 
         if (!$result) { 
             $msg="Failed to list users.";
             trigger_error($msg); 
@@ -193,12 +148,6 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
           <tr><td><input type="submit" name='add' value="Add Members to Group" /></td></tr>
         </table>
       </form>
-      
-  
-	<title>
-    Group Files
-    </title>
-      
       
       <form enctype="multipart/form-data" 
           action="<?php echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";?>" method="POST"> <table title="Content" id="content" border="0">
@@ -229,8 +178,15 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         } 
 	  
 			
-			?>"
-         <tr><td><input type="submit" name='delete' value="Delete Files" /></td></tr>
+			?>
+         <tr><td><input type="submit" name='delete' value="Delete Members" /></td></tr>
+          <tr>
+            <td>
+                <a href="groupProfilePage.php?group_id=<?php 
+                    echo $_GET['group_id'];
+                    ?>">Group Files</a>
+            </td>
+          </tr>
           <tr>
             <td><a href= "login.php?logout"> Logout</a></td>
           </tr>

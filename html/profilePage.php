@@ -159,7 +159,8 @@ if (array_key_exists('delete', $_POST)){
     <td width="959" bgcolor="white">
       <form enctype="multipart/form-data" 
                   action="<?php echo "$_SERVER[PHP_SELF]";?>" method="POST">
-        <table title="FileList" id="FileList" border="0">
+        <h3>My Groups</h3>
+        <table title="GroupList" id="GroupList" border="0">
         <?php 
 
 
@@ -175,18 +176,16 @@ USING(group_id) WHERE user_id=$1";
         } 
 
         while($myrow = pg_fetch_assoc($result)) {
-            echo '<tr><td><input type="checkbox" ';
-            printf('value="%s" name="filelist[]"/>' . '
-					<a href="groupProfilePage.php?group_id=%s">%s</a>', 
-                $myrow['group_id'], $myrow['group_id'], $myrow['group_name']); 
+            echo '<tr><td>';
+            printf('<a href="groupProfilePage.php?group_id=%s">%s</a>', 
+                $myrow['group_id'], $myrow['group_name']); 
             echo '</td></tr>';
-        } 
+        }?>
+        </table>
 
-
-
-
-
-
+        <h3>My Files</h3>
+        <table title="FilesList" id="FilesList" border="0">
+        <?php 
 
         $query = "SELECT * FROM files WHERE user_id=$1"; 
         $params = array($_SESSION['user_id']);

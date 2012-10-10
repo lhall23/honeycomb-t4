@@ -30,6 +30,7 @@ CREATE TABLE files (
     user_id     INTEGER NOT NULL 
         REFERENCES users(user_id) ON DELETE CASCADE, 
     file_name   varchar,
+	size		INTEGER NOT NULL,
     location    varchar UNIQUE
 );
 

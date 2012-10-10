@@ -1,9 +1,7 @@
 <?php
 /* 
- * register.php
- * -Lee Hall Sat 08 Sep 2012 06:05:55 PM EDT
  *
- * Allow the user to create a new account, and verify that account
+ * Allow the user to create a new group
  *
  */
 // Yes, this makes a connection when we don't neccesarily need it. It's better
@@ -18,9 +16,6 @@ if (array_key_exists('register', $_POST)){
 if (array_key_exists('group_name', $_POST))
 {
 
-
-    //Make sure that no one's doing anything tricksey with the groupname,
-    //since it gets used as a filename for the moment
     if(!ctype_alnum($_POST['group_name'])){
         $msg="Please only use letters and numbers in the Group Name.";
     header("Location: $_SERVER[PHP_SELF]?msg=$msg");
@@ -28,9 +23,9 @@ if (array_key_exists('group_name', $_POST))
     }
 
   //Get Group info from database
-  $params=array($_POST['group_name']);
-  $sql="INSERT INTO groups(group_name) VALUES 
-    ($1) RETURNING group_id;";
+  $params=array($_POST['group_name'],$_SESSION['user_id']);
+  $sql="INSERT INTO groups(group_name,owner_id) VALUES 
+    ($1,$2) RETURNING group_id;";
   $results=pg_query_params($conn, $sql, $params);
   
   $row= pg_fetch_array($results);
@@ -61,29 +56,6 @@ if (array_key_exists('group_name', $_POST))
   die("Group name not set. How did you get here?");
   }
 }
-
-
-
-  // We can still fail after this, but we've finished authentication, so it's
-  // safe to authorize the user here.
-  /*------
-  $_SESSION['group_id']=$row['group_id'];
-  $_SESSION['group_name']=$row['group_name'];
-
-  if (!mkdir("$FILE_STORE/$_SESSION[user_name]")) {
-    die("Unable to create user file system.");
-  }
-  --------*/ 
-  /*$sql="UPDATE groups SET auth_hash=NULL WHERE group_id=$1;";
-  $params=array($row['group_id']);
-  $results=pg_query_params($conn, $sql, $params);
-  if (!$results || pg_affected_rows($results) != 1){
-    die("Database error verifying user.");
-  }
-  */
-  
- 
-
 ?>
 
 <HTML> 
