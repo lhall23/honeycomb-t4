@@ -125,7 +125,7 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         <?php 
 
 
- $query = "SELECT * FROM users 
+ $query = "SELECT DISTINCT user_name, user_id FROM users 
             LEFT JOIN group_members USING(user_id) 
             WHERE group_id != $1 OR group_id IS NULL"; 
  $params=array($_GET['group_id']);

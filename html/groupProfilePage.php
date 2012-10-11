@@ -107,7 +107,7 @@ echo "$_SERVER[PHP_SELF]?group_id=$_GET[group_id]";
         <?php 
 
 
- $query = "SELECT * FROM files 
+ $query = "SELECT DISTINCT file_name, file_id FROM files 
             LEFT JOIN group_files USING (file_id) 
             WHERE user_id=$1 AND (group_id != $2 OR group_id IS NULL)"; 
         $params = array($_SESSION['user_id'], $_GET['group_id']);
